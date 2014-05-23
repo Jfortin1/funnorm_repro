@@ -1,13 +1,14 @@
 # This script will create a RGSet for the discovery cohort and a RGSet for the validation cohort
 i=as.numeric(commandArgs(TRUE)[1])
 
-funnormDir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro2"
+funnormDir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro"
 rawDir <- paste0(funnormDir,"/raw_datasets")
 disValDir <- paste0(funnormDir,"/dis_val_datasets")
 designDir <- paste0(funnormDir,"/designs")
 normDir   <- paste0(funnormDir,"/norm_datasets")
 scriptDir <- paste0(funnormDir,"/scripts")
 svaDir    <- paste0(funnormDir,"/sva_results")
+combatDir <- paste0(funnormDir,"/combat_results")
 
 dataset_names <- c("ontario_ebv","ontario_blood","kirc")
 dataset_names <- c(paste0("dis_",dataset_names), paste0("val_",dataset_names))
