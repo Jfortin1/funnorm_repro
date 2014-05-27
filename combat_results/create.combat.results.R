@@ -19,7 +19,7 @@ data.file <- paste0("rgset_",dataset_names[i],".Rda")
 
 # Load SVA helper function
 setwd(scriptDir)
-source("returnDmpsFromSVA.R")
+source("returnDmpsFromCombat.R")
 
 
 library(minfi)
@@ -59,11 +59,15 @@ rgset <- updateObject(rgset)
 	pheno <- as.character(design$group[match(sampleNames, design$sampleName)])
 	names(pheno) <- design$sampleName[match(sampleNames, design$sampleName)]
 
-# Performing sva:
-	sva.results <- runSva(rgSet=rgset, pheno=pheno)
+	batch <- as.character(substr(sampleNames, 1,10))
+	names(batch) <- sampleNames
 
-setwd(svaDir)
-save(sva.results, file=paste0("sva_results_",dataset_names[i],".Rda"))
+
+# Performing sva:
+	combat.results <- runCombat(rgSet=rgset, pheno=pheno, batch=batch)
+
+setwd(combatDir)
+save(combat.results, file=paste0("combat_results_",dataset_names[i],".Rda"))
 
 
 
