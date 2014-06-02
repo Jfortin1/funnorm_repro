@@ -70,7 +70,7 @@ rownames(dmps) <- rownames(table)
 dmps <- na.omit(dmps)
 
 setwd(aml27kDir)
-save(dmps, file="dmps_27k_kirc_plate_adjusted.Rda")
+save(dmps, file="dmps_27k_aml_plate_adjusted.Rda")
 
 
 

@@ -19,6 +19,7 @@ setwd(scriptDir)
 source("printROCFromROCData.R")
 
 # Let's load the ROC data
+i=3
 setwd(rocDir)
 dataset_names <- c("ontario_ebv","ontario_blood","kirc")
 load(paste0("rocData_",k_vector[i]/1000,"K_",dataset_names[i],".Rda"))
@@ -27,10 +28,12 @@ load(paste0("sva_rocData_",k_vector[i]/1000,"K_",dataset_names[i],".Rda"))
 roc2 <- rocData
 load(paste0("sva_funnorm_rocData_",k_vector[i]/1000,"K_",dataset_names[i],".Rda"))
 roc3 <- rocData
-spec <- c(roc1$spec,roc2$spec,roc3$spec)[c(1,2,3,6,8,9)]
-sens <- c(roc1$sens,roc2$sens,roc3$sens)[c(1,2,3,6,8,9)]
+load(paste0("combat_rocData_",k_vector[i]/1000,"K_",dataset_names[i],".Rda"))
+roc4 <- rocData
+spec <- c(roc1$spec,roc2$spec,roc3$spec,roc4$spec)[c(1,2,3,6,8,9,10)]
+sens <- c(roc1$sens,roc2$sens,roc3$sens,roc4$sens)[c(1,2,3,6,8,9,10)]
 roc <- list(spec=spec,sens=sens)
-colors <- c("black","deepskyblue3","deeppink3","orange","grey","olivedrab")
+colors <- c("black","deepskyblue3","deeppink3","orange","grey","olivedrab","yellow")
 
 
 setwd(rocPlotDir)
