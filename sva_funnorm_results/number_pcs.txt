@@ -1,0 +1,8 @@
+1 24 Ontario EBV Dis
+2 20 Ontario Blood Dis
+3 30 KIRC Dis
+4 25 Ontario EBV Val
+5 22 Ontario Blood Val
+6 38 KIRC Val
+7 24 AML 
+8 17 Ontario Gender
