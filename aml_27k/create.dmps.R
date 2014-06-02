@@ -42,6 +42,36 @@ setwd(aml27kDir)
 save(dmps, file="dmps_27k_aml.Rda")
 
 
+# Let's create this time dmps with plate adjustment:
+setwd(metaDir)
+covs <- read.csv("LAML.mappings.27k.csv")
+plate <- as.character(covs$plate)
+names(plate) <- covs$barcode
+plate <- plate[match(colnames(beta), names(plate))]
+plate <- as.factor(plate)
+
+# Empirical Bayes with plate adjustment: 
+library(limma)
+mod  <- model.matrix(~plate + as.factor(pheno))
+fit <- lmFit(beta, mod)
+fit <- eBayes(fit)
+
+n1 <- length(unique(plate))
+table <- topTable(fit, coef=(n1+1):(ncol(mod)), number = nrow(fit$coefficients))
+
+
+intercept <- table$AveExpr
+pval      <- table$P.Value
+f         <- table$F
+
+dmps <- data.frame(intercept=intercept, f = f,pval = pval)
+dmps <- dmps[order(dmps$pval),]
+rownames(dmps) <- rownames(table)
+dmps <- na.omit(dmps)
+
+setwd(aml27kDir)
+save(dmps, file="dmps_27k_kirc_plate_adjusted.Rda")
+
 
 
 
