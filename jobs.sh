@@ -219,6 +219,12 @@ do
 	done
 done
 
+# Create combat results
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/combat_results
+for k in {1..8}
+do
+	qsub -cwd -V -l jabba,mem_free=10G,h_vmem=12G create.combat.results.sh $k;
+done
 
 
 
