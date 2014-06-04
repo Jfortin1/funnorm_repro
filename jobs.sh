@@ -121,7 +121,7 @@ done
 
 # The following code is to submit jobs for the sample size simulation:
 
-# To create the norm data for each simulation
+# To create the fun norm data for each simulation
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
 for k in {1..5}
 do
@@ -131,6 +131,17 @@ do
 		sleep 1
 	done
 done
+
+# To create the other norm data for each simulation (SWAN, Quantile, Dasen)
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
+for k in {1..5}
+do
+	for j in {1..100}
+	do
+		qsub -cwd -V -l jabba,mem_free=10G,h_vmem=12G create.norm.other.sh $k $j;
+	done
+done
+
 
 # Create raw
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
@@ -150,6 +161,16 @@ do
 	for j in {1..100}
 	do
 		qsub -cwd -V -l jabba,mem_free=5G,h_vmem=10G create.noob.sh $k $j;
+	done
+done
+
+# Create bmiq
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
+for k in {1..5}
+do
+	for j in {1..100}
+	do
+		qsub -cwd -V -l jabba,mem_free=5G,h_vmem=10G create.bmiq.sh $k $j;
 	done
 done
 
@@ -225,6 +246,28 @@ for k in {1..8}
 do
 	qsub -cwd -V -l jabba,mem_free=10G,h_vmem=12G create.combat.results.sh $k;
 done
+
+
+# To submit ruv jobs:
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/ruv_results
+for i in {1..8}
+do
+	for k in {1..40}
+	do
+		qsub -cwd -V -l jabba,mem_free=15G,h_vmem=16G create.ruv.results.tuning.sh $i $k;
+	done
+done
+
+# To submit ruv + funnorm jobs: 
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/ruv_funnorm_results
+for i in {1..8}
+do
+	for k in {1..40}
+	do
+		qsub -cwd -V -l jabba,mem_free=15G,h_vmem=16G create.ruv.funnorm.results.tuning.sh $i $k;
+	done
+done
+
 
 
 
