@@ -83,6 +83,9 @@ names7  <- c("Raw","Quantile","noob","dasen","SWAN","BMIQ","Funnorm")
 colorsSVA <- c("black","gray70","deeppink3","deeppink3")
 namesSVA  <- c("Raw","SVA","Funnorm","Funnorm + SVA")
 
+colorsRUV <- c("black","gray70","deeppink3","deeppink3", "darkslategray4","darkslategray4")
+namesRUV <- c("Raw","SVA","Funnorm","Funnorm + SVA","RUV","Funnorm + RUV")
+
 
 
 ### Generate ROC curves for EBV:
@@ -95,6 +98,13 @@ rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
 load("sva_funnorm_rocData_100K_ontario_ebv.Rda")
 rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
 rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
+load("ruv_rocData_100K_ontario_ebv.Rda")
+rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
+rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
+load("ruv_funnorm_rocData_100K_ontario_ebv.Rda")
+rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
+rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
+
 
 roc4 <- rocDataTotal
 roc4[[1]] <- roc4[[1]][c(1,2,6,3)]
@@ -138,6 +148,21 @@ pdf("Lympho_CompleteROC_MainMethods_SVA.pdf", width=5, height=5)
 printROCFromROCData(rocSVA, xcutoff=1, main="",colors=colorsSVA, names=namesSVA, lty=c(1,1,1,2), lwd=c(3,3,3,2))
 dev.off()
 
+rocRUV<- rocDataTotal
+rocRUV[[1]] <- rocRUV[[1]][c(1,8,3,9,10,11)]
+rocRUV[[2]] <- rocRUV[[2]][c(1,8,3,9,10,11)]
+
+pdf("Lympho_PartialROC_MainMethods_SVARUV.pdf", width=5, height=5)
+printROCFromROCData(rocRUV, xcutoff=0.1, main="",colors=colorsRUV, names=namesRUV, lty=c(1,1,1,2,1,2), lwd=c(3,3,3,2,3,2))
+dev.off()
+
+pdf("Lympho_CompleteROC_MainMethods_SVARUV.pdf", width=5, height=5)
+printROCFromROCData(rocRUV, xcutoff=1, main="",colors=colorsRUV, names=namesRUV, lty=c(1,1,1,2,1,2), lwd=c(3,3,3,2,3,2))
+dev.off()
+
+
+
+
 
 ## Now let's create the ROC curve for KIRC:
 setwd(paste0(funnormDir,"/roc_data"))
@@ -147,6 +172,12 @@ load("sva_rocData_100K_kirc.Rda")
 rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
 rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
 load("sva_funnorm_rocData_100K_kirc.Rda")
+rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
+rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
+load("ruv_rocData_100K_kirc.Rda")
+rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
+rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
+load("ruv_funnorm_rocData_100K_kirc.Rda")
 rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
 rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
 
@@ -182,12 +213,23 @@ rocSVA <- rocDataTotal
 rocSVA[[1]] <- rocSVA[[1]][c(1,8,3,9)]
 rocSVA[[2]] <- rocSVA[[2]][c(1,8,3,9)]
 
+
+rocRUV<- rocDataTotal
+rocRUV[[1]] <- rocRUV[[1]][c(1,8,3,9,10,11)]
+rocRUV[[2]] <- rocRUV[[2]][c(1,8,3,9,10,11)]
+
 # Need to add ROC data for ComBat as well:
 setwd(paste0(funnormDir,"/roc_data"))
 load("combat_rocData_100K_kirc.Rda")
 rocSVA[[1]] <- c(rocData[[1]],rocSVA[[1]])
 rocSVA[[2]] <- c(rocData[[2]],rocSVA[[2]])
 
+
+# Need to add ROC data for ComBat as well:
+setwd(paste0(funnormDir,"/roc_data"))
+load("combat_rocData_100K_kirc.Rda")
+rocRUV[[1]] <- c(rocData[[1]],rocRUV[[1]])
+rocRUV[[2]] <- c(rocData[[2]],rocRUV[[2]])
 
 
 setwd(plotDir)
@@ -197,7 +239,15 @@ printROCFromROCData(rocSVA, xcutoff=0.1, ycutoff=0.4, main="",colors=c("green",c
 dev.off()
 
 pdf("KIRC_CompleteROC_MainMethods_SVA.pdf", width=5, height=5)
-printROCFromROCData(rocSVA, xcutoff=1, main="",colors=c("green",colorsSVA), names=namesSVA, lty=c(1,1,1,1,2), lwd=c(3,3,3,3,2))
+printROCFromROCData(rocSVA, xcutoff=1, main="",colors=c("green",colorsSVA), names=c("ComBat",namesSVA), lty=c(1,1,1,1,2), lwd=c(3,3,3,3,2))
+dev.off()
+
+pdf("KIRC_PartialROC_MainMethods_SVARUV.pdf", width=5, height=5)
+printROCFromROCData(rocRUV, xcutoff=0.1, ycutoff=0.4, main="",colors=c("green",colorsRUV), names=c("ComBat",namesRUV), lty=c(1,1,1,1,2,1,2), lwd=c(3,3,3,3,2,3,2))
+dev.off()
+
+pdf("KIRC_CompleteROC_MainMethods_SVARUV.pdf", width=5, height=5)
+printROCFromROCData(rocRUV, xcutoff=1, main="",colors=c("green",colorsRUV), names=c("ComBat",namesRUV), lty=c(1,1,1,1,2,1,2), lwd=c(3,3,3,3,2,3,2))
 dev.off()
 
 
@@ -210,6 +260,12 @@ load("sva_rocData_0.1K_ontario_blood.Rda")
 rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
 rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
 load("sva_funnorm_rocData_0.1K_ontario_blood.Rda")
+rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
+rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
+load("ruv_rocData_0.1K_ontario_blood.Rda")
+rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
+rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
+load("ruv_funnorm_rocData_0.1K_ontario_blood.Rda")
 rocDataTotal[[1]] <- c(rocDataTotal[[1]],rocData[[1]])
 rocDataTotal[[2]] <- c(rocDataTotal[[2]],rocData[[2]])
 
@@ -257,6 +313,17 @@ printROCFromROCData(rocSVA, xcutoff=1, main="",colors=colorsSVA, names=namesSVA,
 dev.off()
 
 
+rocRUV<- rocDataTotal
+rocRUV[[1]] <- rocRUV[[1]][c(1,8,3,9,10,11)]
+rocRUV[[2]] <- rocRUV[[2]][c(1,8,3,9,10,11)]
+
+pdf("Blood_PartialROC_MainMethods_SVARUV.pdf", width=5, height=5)
+printROCFromROCData(rocRUV, xcutoff=0.1, main="",colors=colorsRUV, names=namesRUV, lty=c(1,1,1,2,1,2), lwd=c(3,3,3,2,3,2))
+dev.off()
+
+pdf("Blood_CompleteROC_MainMethods_SVARUV.pdf", width=5, height=5)
+printROCFromROCData(rocRUV, xcutoff=1, main="",colors=colorsRUV, names=namesRUV, lty=c(1,1,1,2,1,2), lwd=c(3,3,3,2,3,2))
+dev.off()
 
 ### Now let's produce the Concordance curves for Discovery-Validation. 
 ## Concordance curve for EBV: 
@@ -282,6 +349,7 @@ dev.off()
 pdf("Lympho_Concordance_DisVal_AddMethods.pdf", width=5, height=5)
 printOverlapFromData(overlap7, xcutoff=120000,ycutoff=0.5, ycutoff2=0.9, main="", colors=colors7, lty=rep(1,10),names=names7)
 dev.off()
+
 
 
 
