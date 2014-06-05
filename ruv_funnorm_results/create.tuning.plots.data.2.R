@@ -36,6 +36,6 @@ for (l in 1:length(cutoff.vector)){
 }
 
 
-setwd(ruvDirTuningPlotData)
+setwd(ruvFunnormDirTuningPlotData)
 save(counts.matrix, file=paste0("counts.matrix_",dataset_names[i],".Rda"))
 

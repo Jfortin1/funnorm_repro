@@ -19,6 +19,7 @@ setwd(scriptDir)
 source("printOverlapFromData.R")
 
 # Let's load the ROC data
+i=1
 setwd(rocDir)
 dataset_names <- c("ontario_ebv","ontario_blood","kirc")
 load(paste0("overlapData_100_",dataset_names[i],".Rda"))
@@ -41,3 +42,14 @@ dev.off()
 
 
 
+
+setwd(scriptDir)
+source("printOverlapFromData.R")
+
+# External overlap:
+setwd(paste0(funnormDir,"/external_validations"))
+load("overlapData1K_kirc_dis.Rda")
+colors <- c("black","deepskyblue3","deeppink3","orange","grey","olivedrab","yellow")
+overlapData <- list(overlaps=overlapData1K$overlaps[c(1,2,3,6,8,9,10)],sequences=overlapData1K$sequences[c(1,2,3,6,8,9,10)])
+printOverlapFromData(overlapData, ycutoff=0, xcutoff=25000,main="", colors=colors, names=as.character(1:9), lty=rep(1,10))
+dev.off()

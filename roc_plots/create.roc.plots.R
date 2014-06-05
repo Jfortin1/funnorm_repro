@@ -19,7 +19,7 @@ setwd(scriptDir)
 source("printROCFromROCData.R")
 
 # Let's load the ROC data
-i=3
+i=2
 setwd(rocDir)
 dataset_names <- c("ontario_ebv","ontario_blood","kirc")
 load(paste0("rocData_",k_vector[i]/1000,"K_",dataset_names[i],".Rda"))
@@ -28,16 +28,32 @@ load(paste0("sva_rocData_",k_vector[i]/1000,"K_",dataset_names[i],".Rda"))
 roc2 <- rocData
 load(paste0("sva_funnorm_rocData_",k_vector[i]/1000,"K_",dataset_names[i],".Rda"))
 roc3 <- rocData
-load(paste0("combat_rocData_",k_vector[i]/1000,"K_",dataset_names[i],".Rda"))
-roc4 <- rocData
-spec <- c(roc1$spec,roc2$spec,roc3$spec,roc4$spec)[c(1,2,3,6,8,9,10)]
-sens <- c(roc1$sens,roc2$sens,roc3$sens,roc4$sens)[c(1,2,3,6,8,9,10)]
+if (i ==3){
+	load(paste0("combat_rocData_",k_vector[i]/1000,"K_",dataset_names[i],".Rda"))
+	roc4 <- rocData
+	spec <- c(roc1$spec,roc2$spec,roc3$spec,roc4$spec)[c(1,2,3,6,8,9,10)]
+	sens <- c(roc1$sens,roc2$sens,roc3$sens,roc4$sens)[c(1,2,3,6,8,9,10)]
+	colors <- c("black","deepskyblue3","deeppink3","orange","grey","olivedrab","yellow")
+} else {
+	spec <- c(roc1$spec,roc2$spec,roc3$spec)[c(1,2,3,6,8,9)]
+	sens <- c(roc1$sens,roc2$sens,roc3$sens)[c(1,2,3,6,8,9)]
+	colors <- c("black","deepskyblue3","deeppink3","orange","grey","olivedrab")
+}
 roc <- list(spec=spec,sens=sens)
-colors <- c("black","deepskyblue3","deeppink3","orange","grey","olivedrab","yellow")
 
 
 setwd(rocPlotDir)
 
-printROCFromROCData(roc, xcutoff=0.1, main="", colors=colors, names=as.character(1:9), lty=rep(1,9))
+printROCFromROCData(roc, xcutoff=1, main="", colors=colors, names=as.character(1:9), lty=rep(1,9))
 dev.off()
 
+
+
+setwd(paste0(funnormDir,"/external_validations"))
+load("rocdata_27k_aml.Rda")
+spec <- rocdata_27k_aml$spec[c(1,2,3,6,8,9,10)]
+sens <- rocdata_27k_aml$sens[c(1,2,3,6,8,9,10)]
+roc <- list(spec=spec,sens=sens)
+colors <- c("black","deepskyblue3","deeppink3","orange","grey","olivedrab","yellow")
+printROCFromROCData(roc, xcutoff=0.1, main="", colors=colors, names=as.character(1:9), lty=rep(1,9))
+dev.off()

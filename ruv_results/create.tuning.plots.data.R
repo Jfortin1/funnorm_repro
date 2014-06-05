@@ -17,7 +17,7 @@ data.file <- paste0("rgset_",dataset_names[i],".Rda")
 setwd(ruvDirTuning)
 
 p.matrix <- NULL
-for (k in 1:40){
+for (k in 0:40){
 	load(paste0("ruv_results_sex_",dataset_names[i],"_k_",k,".Rda"))
 	p.matrix <- cbind(p.matrix,t(ruv.results$p))
 	print(k)
