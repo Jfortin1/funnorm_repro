@@ -1,6 +1,8 @@
-# This script will create a RGSet for the discovery cohort and a RGSet for the validation cohort
 i=as.numeric(commandArgs(TRUE)[1]) # Dataset
-k=as.numeric(commandArgs(TRUE)[2]) # Value of k
+
+
+k_vector <- c(14,36,0,11,5,3,0,21)
+k <- k_vector[i]
 
 funnormDir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro"
 rawDir <- paste0(funnormDir,"/raw_datasets")
@@ -16,11 +18,8 @@ dataset_names <- c(dataset_names,"aml","ontario_gender")
 
 data.file <- paste0("rgset_",dataset_names[i],".Rda")
 
-
-# Load SVA helper function
 setwd(scriptDir)
 source("returnDmpsFromRUV.R")
-
 
 library(minfi)
 # For the discovery datasets
@@ -41,43 +40,25 @@ if (i %in% 1:3){
 }
 
 
+
 rgset <- updateObject(rgset) 
+sampleNames <- colnames(rgset)
 
-# Creation of the phenotype: need sex of the samples: 
-	sampleNames <- colnames(rgset)
-	mset <- preprocessRaw(rgset)
-	mset <- mapToGenome(mset)
+design_names <- c("ontario_ebv","ontario_blood","kirc")
+design_names <- c(paste0("design_",design_names))
+design_names <- c(design_names,design_names,"design_aml","design_ontario_gender")
 
-	sex <- getSex(mset)$predictedSex
+setwd(designDir)
+design_file <- paste0(design_names[i],".Rda")
+load(design_file)
+design <- get(design_names[i])
 
-	#design_names <- c("ontario_ebv","ontario_blood","kirc")
-	#design_names <- c(paste0("design_",design_names))
-	#design_names <- c(design_names,design_names,"design_aml","design_ontario_gender")
-
-	#setwd(designDir)
-	#design_file <- paste0(design_names[i],".Rda")
-	#load(design_file)
-	#design <- get(design_names[i])
-
-	#pheno <- as.character(design$group[match(sampleNames, design$sampleName)])
-	#names(pheno) <- design$sampleName[match(sampleNames, design$sampleName)]
-
-	pheno <- sex 
-	names(pheno) <- colnames(mset)
+pheno <- as.character(design$group[match(sampleNames, design$sampleName)])
+names(pheno) <- design$sampleName[match(sampleNames, design$sampleName)]
 
 # Performing ruv:
-	ruv.results <- runRuv(rgSet=rgset, pheno=pheno, k=k)
+ruv.results <- runRuv(rgSet=rgset, pheno=pheno, k=k)
 
-setwd(ruvDirTuning)
-save(ruv.results, file=paste0("ruv_results_sex_",dataset_names[i],"_k_",k,".Rda"))
-
-
-
-	
-
-
-
-
-
-
+setwd(paste0(funnormDir, "/ruv_results"))
+save(ruv.results, file=paste0("ruv_results_",dataset_names[i],"_k_",k,".Rda"))
 
