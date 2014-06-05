@@ -6,6 +6,8 @@ dmpsDir    <- paste0(funnormDir,"/dmps")
 svaDir     <- paste0(funnormDir,"/sva_results")
 svaFunnormDir <- paste0(funnormDir,"/sva_funnorm_results")
 combatDir  <- paste0(funnormDir,"/combat_results")
+ruvDir     <- paste0(funnormDir,"/ruv_results")
+ruvFunnormDir <- paste0(funnormDir,"/ruv_funnorm_results")
 scriptDir  <- paste0(funnormDir,"/scripts")
 externalValDir <- paste0(funnormDir,"/external_validations")
 
@@ -26,6 +28,15 @@ dmps450k <- c(dmps450k,dmps)
 
 setwd(combatDir)
 load("combat_dmps_aml.Rda")
+dmps450k <- c(dmps450k,dmps)
+
+# Need to add dmps for sva, sva+funnorm and combat
+setwd(ruvDir)
+load("ruv_dmps_aml.Rda")
+dmps450k <- c(dmps450k,dmps)
+
+setwd(ruvFunnormDir)
+load("ruv_funnorm_dmps_aml.Rda")
 dmps450k <- c(dmps450k,dmps)
 
 # Let's load the 27k dmps:
@@ -82,6 +93,8 @@ rocdata_27k_aml <- generateROCDataFromExternalTruth(p.list, dmps450k)
 	
 setwd(externalValDir)	
 save(rocdata_27k_aml , file="rocdata_27k_aml.Rda")
+
+
 
 
 
