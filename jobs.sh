@@ -252,9 +252,9 @@ done
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/ruv_results
 for i in {1..8}
 do
-	for k in {1..40}
+	for k in {0..40}
 	do
-		qsub -cwd -V -l jabba,mem_free=15G,h_vmem=16G create.ruv.results.tuning.sh $i $k;
+		qsub -cwd -V -l jabba,mem_free=25G,h_vmem=26G create.ruv.results.tuning.sh $i $k;
 	done
 done
 
@@ -262,13 +262,47 @@ done
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/ruv_funnorm_results
 for i in {1..8}
 do
-	for k in {1..40}
+	for k in {0..40}
 	do
-		qsub -cwd -V -l jabba,mem_free=15G,h_vmem=16G create.ruv.funnorm.results.tuning.sh $i $k;
+		qsub -cwd -V -l jabba,mem_free=25G,h_vmem=26G create.ruv.funnorm.results.tuning.sh $i $k;
+		sleep 5
 	done
 done
 
 
+
+
+
+# To create tuning plots data:
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/ruv_results
+for i in {1..8}
+do
+	qsub -cwd -V -l jabba,mem_free=25G,h_vmem=26G create.tuning.plots.data.sh $i;
+done
+
+# To create tuning plots data:
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/ruv_funnorm_results
+for i in {1..8}
+do
+	qsub -cwd -V -l jabba,mem_free=25G,h_vmem=26G create.tuning.plots.data.sh $i;
+done
+
+
+
+# To create tuning plots data:
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/ruv_results
+for i in {1..8}
+do
+	qsub -cwd -V -l jabba,mem_free=25G,h_vmem=26G create.tuning.plots.data.2.sh $i;
+done
+
+
+# To create tuning plots data:
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/ruv_funnorm_results
+for i in {1..8}
+do
+	qsub -cwd -V -l jabba,mem_free=25G,h_vmem=26G create.tuning.plots.data.2.sh $i;
+done
 
 
 

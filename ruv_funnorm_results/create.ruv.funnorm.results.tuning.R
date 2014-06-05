@@ -8,8 +8,8 @@ disValDir <- paste0(funnormDir,"/dis_val_datasets")
 designDir <- paste0(funnormDir,"/designs")
 normDir   <- paste0(funnormDir,"/norm_datasets")
 scriptDir <- paste0(funnormDir,"/scripts")
-ruvFunnormDirTuning    <- paste0(funnormDir,"/ruv_results/sex_tuning")
-funnormDir <- 
+ruvFunnormDirTuning    <- paste0(funnormDir,"/ruv_funnorm_results/sex_tuning")
+
 
 dataset_names <- c("ontario_ebv","ontario_blood","kirc")
 dataset_names <- c(paste0("dis_",dataset_names), paste0("val_",dataset_names))
@@ -68,7 +68,7 @@ rgset <- updateObject(rgset)
 # Performing sva:
 	ruv.results <- runRuvFunnorm(rgSet=rgset, pheno=pheno, k=k)
 
-setwd(ruvDirTuning)
+setwd(ruvFunnormDirTuning)
 save(ruv.results, file=paste0("ruv_funnorm_results_sex_",dataset_names[i],"_k_",k,".Rda"))
 
 

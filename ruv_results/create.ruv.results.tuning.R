@@ -65,7 +65,7 @@ rgset <- updateObject(rgset)
 	pheno <- sex 
 	names(pheno) <- colnames(mset)
 
-# Performing sva:
+# Performing ruv:
 	ruv.results <- runRuv(rgSet=rgset, pheno=pheno, k=k)
 
 setwd(ruvDirTuning)
@@ -73,7 +73,7 @@ save(ruv.results, file=paste0("ruv_results_sex_",dataset_names[i],"_k_",k,".Rda"
 
 
 
-
+	ruv.results <- runRuv(rgSet=rgset, pheno=pheno, k=0)
 
 
 
