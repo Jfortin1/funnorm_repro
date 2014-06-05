@@ -24,7 +24,7 @@ load(paste0("p.matrix_",dataset_names[i],".Rda" ))
 load(paste0(funnormDir,"/sex_analysis/x.probes.status.Rda"))
 truth <- inactivated.x.probes # 1678 probes
 
-cutoff.vector = c(100,1000,10000,100000)
+cutoff.vector = c(10000,25000,50000,100000)
 
 counts.matrix <- matrix(NA, length(cutoff.vector), ncol(p.matrix))
 for (l in 1:length(cutoff.vector)){

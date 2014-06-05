@@ -37,9 +37,9 @@ for (l in 1:length(cutoff.vector)){
 }
 
 
-i=5
+i=4
 setwd(ruvDirTuningPlotData)
-load(paste0("counts.matrix_",dataset_names[i],".Rda"))
+load(file=paste0("counts.matrix_",dataset_names[i],".Rda"))
 
 
 pdf("try.pdf")
