@@ -305,9 +305,64 @@ do
 done
 
 
+# Create optimal RUV:
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/ruv_results
+for i in {1..8}
+do
+	qsub -cwd -V -l jabba,mem_free=35G,h_vmem=36G create.optimal.ruv.sh $i;
+done
+
+
+# Create optimal RUV + Funnorm
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/ruv_funnorm_results
+for i in {1..8}
+do
+	qsub -cwd -V -l jabba,mem_free=35G,h_vmem=36G create.optimal.ruv.sh $i;
+done
 
 
 
+
+
+
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+# To normalize the datasets with new approach
+for i in {1..8}
+do
+	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.norm.sh $i;
+	sleep 50
+done
+
+
+
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+# To normalize the datasets with new approach
+for i in {1..6}
+do
+	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.dmps.sh $i;
+	sleep 5
+done
+
+
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+# To normalize the datasets with new approach
+for i in {1..3}
+do
+	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.roc.data.sh $i;
+done
+
+
+
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+# To normalize the datasets with new approach
+for i in {1..3}
+do
+	qsub -cwd -V -l mem_free=50G,h_vmem=120G create.overlap.data.sh $i;
+done
+
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+# To normalize the datasets with new approach
+qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.kirc.sh
 
 
 
