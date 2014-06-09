@@ -505,72 +505,45 @@ dev.off()
 
 
 # AML:
-setwd(paste0(funnormDir,"/external_validations"))
+setwd(plotDir)
 load("overlapData1K_aml.Rda")
 overlapDataTotal <- overlapData1K
 
-overlap4 <- overlapDataTotal
-overlap4[[1]] <- overlap4[[1]][c(1,2,6,3)]
-overlap4[[2]] <- overlap4[[2]][c(1,2,6,3)]
-overlap4[[3]] <- overlap4[[3]][c(1,2,6,3)]
-
+names7  <- c("Raw","noob","noobFunnorm","Funnorm")
+colors7 <- c("black","orange","olivedrab","deeppink3")
+roc7 <- rocDataTotal
 overlap7 <- overlapDataTotal
-overlap7[[1]] <- overlap7[[1]][c(1,2,6,4,5,7,3)]
-overlap7[[2]] <- overlap7[[2]][c(1,2,6,4,5,7,3)]
-overlap7[[3]] <- overlap7[[3]][c(1,2,6,4,5,7,3)]
+overlap7[[1]] <- overlap7[[1]][c(1,6,8,3)]
+overlap7[[2]] <- overlap7[[2]][c(1,6,8,3)]
+overlap7[[3]] <- overlap7[[3]][c(1,6,8,3)]
 
-overlapSVA <- overlapDataTotal
-overlapSVA[[1]] <- overlapSVA[[1]][c(10,1,8,3,9)]
-overlapSVA[[2]] <- overlapSVA[[2]][c(10,1,8,3,9)]
-overlapSVA[[3]] <- overlapSVA[[3]][c(10,1,8,3,9)]
-
-overlapRUV <- overlapDataTotal
-overlapRUV[[1]] <- overlapRUV[[1]][c(10,1,8,3,9,11,12)]
-overlapRUV[[2]] <- overlapRUV[[2]][c(10,1,8,3,9,11,12)]
-overlapRUV[[3]] <- overlapRUV[[3]][c(10,1,8,3,9,11,12)]
 
 
 setwd(plotDir)
-pdf("LAML_Concordance_DisVal_MainMethods.pdf", width=5, height=5)
-printOverlapFromData(overlap4, xcutoff=25000,ycutoff=0.3, main="", colors=colors4, lty=rep(1,10),names=names4)
-dev.off()
+
+
 
 pdf("LAML_Concordance_DisVal_AddMethods.pdf", width=5, height=5)
 printOverlapFromData(overlap7, xcutoff=25000,ycutoff=0.4, ycutoff2=0.9, main="", colors=colors7, lty=rep(1,10),names=names7)
 dev.off()
 
-pdf("LAML_Concordance_DisVal_MainMethods_SVA.pdf", width=5, height=5)
-printOverlapFromData(overlapSVA, xcutoff=25000,ycutoff=0.3, main="", colors=c("green",colorsSVA), names=c("ComBat",namesSVA), lty=c(1,1,1,1,2), lwd=c(3,3,3,3,2))
-dev.off()
 
-pdf("LAML_Concordance_DisVal_MainMethods_SVARUV.pdf", width=5, height=5)
-printOverlapFromData(overlapRUV, xcutoff=25000,ycutoff=0.3, main="", colors=c("green",colorsRUV), names=c("ComBat",namesRUV), lty=c(1,1,1,1,2,1,2), lwd=c(3,3,3,3,2,3,2))
-dev.off()
 
 # ROC Curves for 27k/450k AML:
 # AML:
-setwd(paste0(funnormDir,"/external_validations"))
+setwd(plotDir)
 load("rocdata_27k_aml.Rda")
 rocDataTotal <- rocdata_27k_aml
 
-roc4 <- rocDataTotal
-roc4[[1]] <- roc4[[1]][c(1,2,6,3)]
-roc4[[2]] <- roc4[[2]][c(1,2,6,3)]
-
 roc7 <- rocDataTotal
-roc7[[1]] <- roc7[[1]][c(1,2,6,4,5,7,3)]
-roc7[[2]] <- roc7[[2]][c(1,2,6,4,5,7,3)]
+roc7[[1]] <- roc7[[1]][c(1,6,8,3)]
+roc7[[2]] <- roc7[[2]][c(1,6,8,3)]
+
+
+
 
 
 setwd(plotDir)
-
-pdf("LAML_PartialROC_MainMethods_27k.pdf", width=5, height=5)
-printROCFromROCData(roc4, xcutoff=0.1, main="",colors=colors4, names=names4, lty=rep(1,10), lwd=rep(3,10))
-dev.off()
-
-pdf("LAML_CompleteROC_MainMethods_27k.pdf", width=5, height=5)
-printROCFromROCData(roc4, xcutoff=1, main="",colors=colors4, names=names4, lty=rep(1,10), lwd=rep(3,10))
-dev.off()
 
 
 pdf("LAML_PartialROC_AddMethods_27k.pdf", width=5, height=5)
@@ -580,6 +553,10 @@ dev.off()
 pdf("LAML_CompleteROC_AddMethods_27k.pdf", width=5, height=5)
 printROCFromROCData(roc7, xcutoff=1, main="",colors=colors7, names=names7, lty=rep(1,10),lwd=rep(2.5,10))
 dev.off()
+
+
+
+
 
 rocSVA <- rocDataTotal
 rocSVA[[1]] <- rocSVA[[1]][c(10,1,8,3,9)]

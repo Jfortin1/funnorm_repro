@@ -364,6 +364,9 @@ cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
 # To normalize the datasets with new approach
 qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.kirc.sh
 
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+# To normalize the datasets with new approach
+qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.aml.sh
 
 
 

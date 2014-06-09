@@ -325,6 +325,8 @@ pdf("Blood_CompleteROC_MainMethods_SVARUV.pdf", width=5, height=5)
 printROCFromROCData(rocRUV, xcutoff=1, main="",colors=colorsRUV, names=namesRUV, lty=c(1,1,1,2,1,2), lwd=c(3,3,3,2,3,2))
 dev.off()
 
+
+
 ### Now let's produce the Concordance curves for Discovery-Validation. 
 ## Concordance curve for EBV: 
 setwd(paste0(funnormDir,"/roc_data"))
@@ -400,6 +402,11 @@ overlapSVA[[1]] <- overlapSVA[[1]][c(10,1,8,3,9)]
 overlapSVA[[2]] <- overlapSVA[[2]][c(10,1,8,3,9)]
 overlapSVA[[3]] <- overlapSVA[[3]][c(10,1,8,3,9)]
 
+overlapRUV <- overlapDataTotal
+overlapRUV[[1]] <- overlapRUV[[1]][c(10,1,8,3,9,11,12)]
+overlapRUV[[2]] <- overlapRUV[[2]][c(10,1,8,3,9,11,12)]
+overlapRUV[[3]] <- overlapRUV[[3]][c(10,1,8,3,9,11,12)]
+
 setwd(plotDir)
 pdf("KIRC_Concordance_27kDiscovery_MainMethods.pdf", width=5, height=5)
 printOverlapFromData(overlap4, xcutoff=15000,ycutoff=0.3, main="", colors=colors4, lty=rep(1,10),names=names4)
@@ -413,11 +420,26 @@ pdf("KIRC_Concordance_27kDiscovery_MainMethods_SVA.pdf", width=5, height=5)
 printOverlapFromData(overlapSVA, xcutoff=15000,ycutoff=0.3, main="", colors=c("green",colorsSVA), names=c("ComBat",namesSVA), lty=c(1,1,1,1,2), lwd=c(3,3,3,3,2))
 dev.off()
 
+pdf("KIRC_Concordance_27kDiscovery_MainMethods_SVARUV.pdf", width=5, height=5)
+printOverlapFromData(overlapRUV, xcutoff=15000,ycutoff=0.3, main="", colors=c("green",colorsRUV), names=c("ComBat",namesRUV), lty=c(1,1,1,1,2,1,2), lwd=c(3,3,3,3,2,3,2))
+dev.off()
+
 
 # KIRC VALIDATION:
 setwd(paste0(funnormDir,"/external_validations"))
 load("overlapData1K_kirc_val.Rda")
 overlapDataTotal <- overlapData1K
+
+
+setwd(paste0(funnormDir,"/external_validations"))
+load("overlapData1K_kirc_val_desesperate.Rda")
+overlapDataTotal <- overlapData1K
+overlap4 <- overlapDataTotal
+
+
+
+
+
 
 overlap4 <- overlapDataTotal
 overlap4[[1]] <- overlap4[[1]][c(1,2,6,3)]
@@ -434,10 +456,22 @@ overlapSVA[[1]] <- overlapSVA[[1]][c(10,1,8,3,9)]
 overlapSVA[[2]] <- overlapSVA[[2]][c(10,1,8,3,9)]
 overlapSVA[[3]] <- overlapSVA[[3]][c(10,1,8,3,9)]
 
+overlapRUV <- overlapDataTotal
+overlapRUV[[1]] <- overlapRUV[[1]][c(10,1,8,3,9,11,12)]
+overlapRUV[[2]] <- overlapRUV[[2]][c(10,1,8,3,9,11,12)]
+overlapRUV[[3]] <- overlapRUV[[3]][c(10,1,8,3,9,11,12)]
+
 setwd(plotDir)
 pdf("KIRC_Concordance_27kValidation_MainMethods.pdf", width=5, height=5)
 printOverlapFromData(overlap4, xcutoff=15000,ycutoff=0.3, main="", colors=colors4, lty=rep(1,10),names=names4)
 dev.off()
+
+
+setwd(plotDir)
+pdf("KIRC_Concordance_27kValidation_MainMethods_TTTTTTTT.pdf", width=5, height=5)
+printOverlapFromData(overlap4, xcutoff=15000,ycutoff=0.3, main="", colors=colors4, lty=rep(1,10),names=names4)
+dev.off()
+
 
 pdf("KIRC_Concordance_27kValidation_AddMethods.pdf", width=5, height=5)
 printOverlapFromData(overlap7, xcutoff=15000,ycutoff=0.4, ycutoff2=0.9, main="", colors=colors7, lty=rep(1,10),names=names7)
@@ -445,6 +479,10 @@ dev.off()
 
 pdf("KIRC_Concordance_27kValidation_MainMethods_SVA.pdf", width=5, height=5)
 printOverlapFromData(overlapSVA, xcutoff=15000,ycutoff=0.3, main="", colors=c("green",colorsSVA), names=c("ComBat",namesSVA), lty=c(1,1,1,1,2), lwd=c(3,3,3,3,2))
+dev.off()
+
+pdf("KIRC_Concordance_27kValidation_MainMethods_SVARUV.pdf", width=5, height=5)
+printOverlapFromData(overlapRUV, xcutoff=15000,ycutoff=0.3, main="", colors=c("green",colorsRUV), names=c("ComBat",namesRUV), lty=c(1,1,1,1,2,1,2), lwd=c(3,3,3,3,2,3,2))
 dev.off()
 
 
@@ -468,6 +506,12 @@ overlapSVA[[1]] <- overlapSVA[[1]][c(10,1,8,3,9)]
 overlapSVA[[2]] <- overlapSVA[[2]][c(10,1,8,3,9)]
 overlapSVA[[3]] <- overlapSVA[[3]][c(10,1,8,3,9)]
 
+overlapRUV <- overlapDataTotal
+overlapRUV[[1]] <- overlapRUV[[1]][c(10,1,8,3,9,11,12)]
+overlapRUV[[2]] <- overlapRUV[[2]][c(10,1,8,3,9,11,12)]
+overlapRUV[[3]] <- overlapRUV[[3]][c(10,1,8,3,9,11,12)]
+
+
 setwd(plotDir)
 pdf("LAML_Concordance_DisVal_MainMethods.pdf", width=5, height=5)
 printOverlapFromData(overlap4, xcutoff=25000,ycutoff=0.3, main="", colors=colors4, lty=rep(1,10),names=names4)
@@ -481,6 +525,9 @@ pdf("LAML_Concordance_DisVal_MainMethods_SVA.pdf", width=5, height=5)
 printOverlapFromData(overlapSVA, xcutoff=25000,ycutoff=0.3, main="", colors=c("green",colorsSVA), names=c("ComBat",namesSVA), lty=c(1,1,1,1,2), lwd=c(3,3,3,3,2))
 dev.off()
 
+pdf("LAML_Concordance_DisVal_MainMethods_SVARUV.pdf", width=5, height=5)
+printOverlapFromData(overlapRUV, xcutoff=25000,ycutoff=0.3, main="", colors=c("green",colorsRUV), names=c("ComBat",namesRUV), lty=c(1,1,1,1,2,1,2), lwd=c(3,3,3,3,2,3,2))
+dev.off()
 
 # ROC Curves for 27k/450k AML:
 # AML:
@@ -520,12 +567,24 @@ rocSVA <- rocDataTotal
 rocSVA[[1]] <- rocSVA[[1]][c(10,1,8,3,9)]
 rocSVA[[2]] <- rocSVA[[2]][c(10,1,8,3,9)]
 
+rocRUV <- rocDataTotal
+rocRUV[[1]] <- rocRUV[[1]][c(10,1,8,3,9,11,12)]
+rocRUV[[2]] <- rocRUV[[2]][c(10,1,8,3,9,11,12)]
+
 pdf("LAML_PartialROC_MainMethods_27k_SVA.pdf", width=5, height=5)
 printROCFromROCData(rocSVA, xcutoff=0.1, main="",colors=c("green",colorsSVA), names=c("ComBat",namesSVA), lty=c(1,1,1,1,2), lwd=c(3,3,3,3,2))
 dev.off()
 
 pdf("LAML_CompleteROC_MainMethods_27k_SVA.pdf", width=5, height=5)
 printROCFromROCData(rocSVA, xcutoff=1, main="",colors=c("green",colorsSVA), names=c("ComBat",namesSVA), lty=c(1,1,1,1,2), lwd=c(3,3,3,3,2))
+dev.off()
+
+pdf("LAML_PartialROC_MainMethods_27k_SVARUV.pdf", width=5, height=5)
+printROCFromROCData(rocRUV, xcutoff=0.1, main="",colors=c("green",colorsRUV), names=c("ComBat",namesRUV), lty=c(1,1,1,1,2,1,2), lwd=c(3,3,3,3,2,3,2))
+dev.off()
+
+pdf("LAML_CompleteROC_MainMethods_27k_SVARUV.pdf", width=5, height=5)
+printROCFromROCData(rocRUV, xcutoff=1, main="",colors=c("green",colorsRUV), names=c("ComBat",namesRUV), lty=c(1,1,1,1,2,1,2), lwd=c(3,3,3,3,2,3,2))
 dev.off()
 
 
