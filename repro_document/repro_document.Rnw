@@ -1,0 +1,200 @@
+% \VignetteIndexEntry{shinyMethyl: interactive visualization of Illumina 450K methylation arrays}
+% \VignettePackage{shinyMethyl}
+% \VignetteDepends{BiocStyle}
+% \VignetteEngine{knitr::knitr}
+
+\documentclass[12pt]{article}
+\usepackage[numbers]{natbib}
+\usepackage{amsthm}
+\newcommand{\minfi}{\Biocpkg{minfi}}
+
+<<style, eval=TRUE, echo=FALSE, results="asis">>=
+BiocStyle::latex()
+@
+
+\title{Functional normalization: reproducible report}
+\author{Jean-Philippe Fortin, Kasper Daniel Hansen}
+\begin{document}
+
+\maketitle{}
+\setcounter{secnumdepth}{1} 
+
+% Introduction
+\section{Introduction}
+
+ \url{https://github.com/Jfortin1/funnorm_repro}
+
+<<initial>>=
+funnormDir <- "/Users/Jean-Philippe/funnorm_repro"
+setwd("/Users/Jean-Philippe/funnorm_repro/")
+@
+
+\subsection{Scripts directory}
+\subsection{Cluster jobs file}
+
+The shell script \Rcode{jobs.sh} contain all the ordered jobs that were submitted to the cluster. 
+
+\subsection{Extraction of the data}
+\subsection{Metadata}
+The folder \Rcode{/metadata} contains the mappings file from TCGA for the AML and KIRC datasets, for both 27k and 450k platforms. These \Rcode{.csv} files contain the names of the samples, the plate information, sample tissue and histology of the samples (used as the phenotype for the subsequent analysis). 
+
+The file \Rcode{clinical\_patient\_laml-1.txt} contains the clinical leukemia tumor subtype defined by \fixme{FAB}. 
+
+The file \Rcode{link27kto450k.Rda} pairs the AML 27k samples to their corresponding 450k samples.
+
+
+\subsection{Experimental designs}
+
+The folder \Rcode{/designs} contain all the design information to construct the discovery and validation datasets used throughout the analysis. For instance, for the KIRC dataset, the design file is called \Rcode{design\_kirc.Rda} and contains the sample names, the phenotypic group and the discovery/validation set identification as follows:
+
+<<>>=
+setwd(file.path(funnormDir, "designs"))
+load("design_kirc.Rda")
+head(design_kirc)
+@
+
+
+The file \Rcode{create.design.aml.R} extracts the AML tumor subtype from the file \Rcode{clinical\_patient\_laml-1.txt} for the AML samples. 
+
+\subsection{Plate information}
+
+The directory \Rcode{/plate\_info} contains the physical plate information of the samples for each dataset. This information is used in the ComBat method [[]] and in the plate adjustment model used for the 27k data. 
+
+<<>>=
+setwd(file.path(funnormDir,"plate_info"))
+load("kirc_plate_450k.Rda")
+head(kirc_plate_450k)
+@
+
+The companion script \Rcode{create.plate.info.R} was used to extract the physical plate information of the samples. 
+
+\subsection{Loading the data in \R}
+
+For each dataset, we read the data into \R{} using the packages \Biocpkg{minfi} and \Biocpkg{methylumi}. The first package produces an \Rcode{RGChannelSet} for each dataset, while the latter package produces a \Rcode{MethyLumiSet}. The reason why we use both packages to read the data is that the \textit{noob} normalization method is implemented in the \Biocpkg{methylumi} package, while all other normalization methods are compatible with \Biocpkg{minfi}. For each dataset, the files are saved in the \Rcode{/raw\_datasets} directory. For instance, \Rcode{rgset\_kirc.Rda} and \Rcode{methylumi\_kirc.Rda} correspond to the \Rcode{RGChannelSet} and \Rcode{methyLumiSet} for the KIRC dataset, respectively. 
+
+\subsection{Production of the discovery and validation datasets}
+The folder \Rcode{dis\_val\_datasets} contains the code to create the discovery and validation datasets objects. For instance, the script \Rcode{create.dis.val.methylumi.R} will produce the \Rcode{MethyLumiSet} object for each discovery and validation subsets of each datasets, and these objects will be saved in this directory under the name \Rcode{methylumi\_dis\_XXX} and \Rcode{methylumi\_val\_XXX} where XXX is the name of the dataset, for instance \textit{kirc}. 
+
+\section{Normalization}
+
+All the scripts to produce the normalized datasets can be found in the folder \Rcode{/norm\_datasets}. 
+
+\subsection{Normalization for raw, funnorm, quantile, SWAN and dasen methods }
+The file \Rcode{create.norm.R} is used to produce the normalized datasets for the raw, funnorm, quantile, SWAN and dasen methods. It will produce files of the form \Rcode{norm\_dis\_XXX.Rda} and \Rcode{norm\_val\_XXX.Rda} in the same directory that contains the normalized data. 
+
+For example, the object stored in \Rcode{norm\_dis\_kirc.Rda} is a list of 5 matrices corresponding to the normalized Beta values for each aforementioned method, for the KIRC discovery dataset. 
+
+\subsection{Normalization for noob method}
+
+Since the \textit{noob} method requires a \Rcode{MethyLumiObject}, we use a different script to produce the normalized datasets. The script \Rcode{create.norm.noob.R} is used to produce these datasets, and the normalized datasets are saved under the name \Rcode{noob\_dis\_XXX.Rda} and \Rcode{noob\_val\_XXX.Rda}. 
+
+\subsection{Normalization for BMIQ}
+
+Because BMIQ is extremely slow and no parallel method is implemented yet, the normalization of the data with BMIQ requires a special treatment. 
+
+The script \Rcode{split.bmiq.R} will read in it \Rcode{RGChannelSet}, and will split the data into individual samples, and resave the samples separately in the folder \Rcode{/funnorm\_repro/raw\_datasets/all\_samples}. This folder contains the 1460 individual samples saved in \Rcode{.Rda files} (for instance, \Rcode{6042308157\_R06C01.Rda}). 
+
+Since BMIQ does not perform between-array normalization, we can normalize all these samples in an embarrassingly parallel way; that's what the script \Rcode{create.norm.bmiq.R} does. It uses the version 1.3 of BMIQ that can be found in the \Rcode{/scripts} folder.
+
+The normalized samples will be saved in the folder \Rcode{/funnorm\_dir/norm\_datasets/all\_samples\_bmiq}. 
+
+The script \Rcode{merge.norm.bmiq.R} will merge back the normalized samples and will create the files \Rcode{bmiq\_dis\_XXX.Rda} and \Rcode{bmiq\_val\_XXX.Rda} for each dataset XXX. 
+
+\subsection{Merging all the normalized data}
+
+For each dataset, the script \Rcode{merge.all.norm.R} will merge all the normalized data above in files called \Rcode{all\_norm\_dis\_XXX.Rda} and \Rcode{all\_norm\_val\_XXX.Rda}. 
+
+\section{Creation of the DMPs}
+
+For each dataset, we create a list of differentially methylated positions (DMPs) with the corresponding dataset phenotype. The script \Rcode{create.dmps.R} located in the directory \Rcode{/dmps} is used to create those lists. For each dataset, the results are stored in files \Rcode{dmps\_dis\_XXX.Rda} and \Rcode{dmps\_val\_XXX.Rda}. Each file is a list (which each entry corresponding to a normalization method) of data frames containing the results. For instance, the top DMPs  from the funnorm method for the KIRC discovery dataset can be accessed by 
+<<eval=FALSE>>=
+setwd(file.path(funnormDir,"dmps"))
+load("dmps_dis_kirc.Rda")
+head(dmps$funnorm)
+@
+
+The row names correspond to the 450k probes. The DMPs are produced with the function \Rcode{dmpFinder} from the \Biocpkg{minfi} package. 
+
+\section{SVA analysis}
+
+\subsection{SVA alone}
+
+The folder \Rcode{/sva\_results} contain the code to run SVA \fixme{citation} on each dataset. The script \Rcode{create.sva.results.R} (which calls the script \Rcode{/scripts/returnDmpsFromSVA.R}) will output the results from SVA in files called \Rcode{sva\_results\_dis\_XXX.Rda} and \Rcode{sva\_results\_val\_XXX.Rda} for each dataset XXX. 
+
+The script \Rcode{create.sva.dmps.R} will format the SVA results in a similar manner to the DMPs previously produced by the normalization methods so that subsequent code can be applied generally. The DMPs are saved in files called \Rcode{sva\_dmps\_dis\_XXX.Rda} and \Rcode{sva\_dmps\_val\_XXX.Rda} for each dataset XXX. 
+
+For instance, the SVA DMPs for the KIRC discovery dataset can be obtained by
+
+<<eval=FALSE>>=
+setwd(file.path(funnormDir,"sva_results"))
+load("sva_dmps_dis_kirc.Rda")
+head(dmps)
+@
+
+The file \Rcode{number\_pcs.txt} described the number of surrogate variables found by SVA for each dataset. 
+\subsection{Funnorm + SVA}
+
+We also look at the combination Funnorm  and SVA. The code to produce the results can be found in the directory \Rcode{/sva\_funnorm\_results}. The scripts \Rcode{create.sva.funnorm.results.R}and \Rcode{create.sva.funnorm.dmps.R} and the text file \Rcode{number\_pcs.txt} are similar to the scripts used for SVA above. 
+
+\section{RUV analysis}
+
+\subsection{RUV alone}
+
+\subsection{Funnorm + RUV}
+
+
+\section{ComBat analysis}
+
+Because ComBat cannot be applied when there is perfect confounding between batch and phenotype, we only applied the ComBat method to the following datasets: KIRC Discovery, KIRC validation and AML. 
+
+The folder \Rcode{/combat\_results} contain the code to produce the results from ComBat. Specifically, the script \Rcode{create.combat.results.R} will output the results of ComBat in the files 
+\Rcode{combat\_results\_dis\_kirc.Rda}, \Rcode{combat\_results\_dis\_val.Rda} and \Rcode{combat\_results\_aml.Rda}. 
+
+Similar to the SVA script, the script \Rcode{create.combat.dmps.R} will produce the DMPs list for each dataset. 
+
+\section{Creation of the DMPs data for the 27K data}
+
+\subsection{KIRC data}
+
+In the folder \Rcode{/kirc\_27k}, the script \Rcode{create.dmps.R} will produce the DMPs for the 27K samples for the KIRC dataset with a plate adjustment using the package \Biocpkg{limma}. 
+
+The results will be stored in the file \Rcode{dmps\_27k\_kirc\_plate\_adjusted.Rda}.
+
+
+\subsection{AML data}
+
+In the folder \Rcode{/aml\_27k}, the script \Rcode{create.dmps.R} will produce the DMPs for the 27K samples for the AML dataset with a plate adjustment using the package \Biocpkg{limma}. 
+
+The results will be stored in the file \Rcode{dmps\_27k\_aml\_plate\_adjusted.Rda}.
+
+\section{Creation of the Discovery/Validation ROC data}
+
+In the folder \Rcode{/roc\_data}, the scripts \Rcode{create.roc.data.XXX.Rda}, where XXX is either blank, \textit{sva}, \textit{sva.funnorm}, \textit{rub} or \textit{ruv.funnorm} will produce the discovery/validation ROC data for the EBV, Blood and KIRC datasets for the normalized data, the SVA results, the funnorm + SVA results, the RUV results and the funnorm + RUV results respectively. 
+
+The results will be stored in files called \textit{XXX\_rocData\_YYY\_ZZZ.Rda} where XXX depends on the method,  and where YYY and ZZZ depends on the dataset.  For instance, \Rcode{ruv\_funnorm\_rocData\_100K\_kirc.Rda} stores the ROC data from the funnorm + RUV method, with 100K loci used as the truth, for the KIRC dataset. 
+
+\section{Creation of the concordance data}
+
+In the folder \Rcode{/roc\_data}, the script \Rcode{create.overlap.data.R} will create the concordance curves data between the discovery and validation subjects for the EBV, Blood and KIRC datasets, for each method. 
+
+The results will be stored in the files \Rcode{overlapData\_XXX\_YYY.Rda} where XXX is either 100 or 1000 (step to calculate the concordance) and YYY is the name of the dataset. For instance, the file \Rcode{overlapData\_100\_kirc.Rda} contains the concordance curves data for the KIRC dataset, where the concordance was calculated at every 100 loci. 
+
+\section{External validation with 27k data}
+
+The directory \Rcode{/external\_validations} contain the script to create the overlap and ROC data of the KIRC and AML datasets when the 27K data DMPs results are used as the truth. 
+
+The scripts \Rcode{external.validation.kirc.R} and \Rcode{external.validation.aml.R} create the concordance curves and ROC curves data for the KIRC and AML datasets, respectively.
+
+For the concordance curves, the results are stored in the files \Rcode{overlapData1K\_XXX.Rda} where XXX is either \Rcode{kirc\_dis}, \Rcode{kirc\_val} or \Rcode{aml}. 
+
+For the ROC curves data, the results are stored in the files \Rcode{rocdata\_27k\_XXX} where XXX is either \Rcode{kirc\_dis}, \Rcode{kirc\_val} or \Rcode{aml}. 
+
+\section{External validation with the WGBS data}
+
+\section{Sensitivity analysis}
+
+\section{Sample size simulation}
+
+\section{}
+\end{document}
+
