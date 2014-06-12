@@ -108,7 +108,7 @@ cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/dmps
 # To create dmps for the norm matrices:
 for i in {1..8}
 do
-	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.dmps.sh $i;
+	qsub -cwd -V -l jabba,mem_free=40G,h_vmem=50G create.dmps.sh $i;
 	sleep 5
 done
 
@@ -128,6 +128,15 @@ do
 	sleep 5
 done
 
+# External validations
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/external_validations
+qsub -cwd -V -l jabba,mem_free=20G,h_vmem=30G external.validation.aml.sh;
+qsub -cwd -V -l jabba,mem_free=20G,h_vmem=30G external.validation.kirc.sh;
+
+
+
+
+
 
 
 # To create overlap data: (only relevant for 1 to 3)
@@ -137,6 +146,8 @@ do
 	qsub -cwd -V -l jabba,mem_free=10G,h_vmem=12G create.roc.data.sh $i;
 	sleep 1
 done
+
+
 
 
 
