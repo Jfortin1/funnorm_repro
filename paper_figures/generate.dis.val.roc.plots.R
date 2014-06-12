@@ -21,7 +21,7 @@
 
 
 create.dis.val.roc.plots.ebv <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro" , 
-	output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures", print = FALSE, save= TRUE) {
+	output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures_repro", print = FALSE, save= TRUE) {
 
 
 	source(file.path(input.dir,"scripts/printROCFromROCData.R"))
@@ -124,7 +124,7 @@ create.dis.val.roc.plots.ebv <- function(input.dir = "/Users/Jean-Philippe/funno
 
 
 create.dis.val.roc.plots.kirc <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro" , 
-	output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures", print = FALSE, save= TRUE) {
+	output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures_repro", print = FALSE, save= TRUE) {
 
 	source(file.path(input.dir,"scripts/printROCFromROCData.R"))
 
@@ -235,7 +235,7 @@ create.dis.val.roc.plots.kirc <- function(input.dir = "/Users/Jean-Philippe/funn
 
 
 create.dis.val.roc.plots.blood <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro" , 
-	output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures", print = FALSE, save= TRUE) {
+	output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures_repro", print = FALSE, save= TRUE) {
 
 	source(file.path(input.dir,"scripts/printROCFromROCData.R"))
 
