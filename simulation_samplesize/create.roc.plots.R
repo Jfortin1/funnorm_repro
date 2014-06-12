@@ -57,12 +57,8 @@ for (i in 1:5){
 	mean.list <- return.mean(matrix.x=matrix.x,matrix.y=matrix.y, span=span)
 	mean <- mean.list$mean
 	x <- 1-mean.list$grid
-	#mean <- sort(mean, decreasing=FALSE)
-	#up <- mean+2*variance
-	#down <- mean-2*variance
 	up = mean.list$up
 	down =mean.list$down
-	#x <- 1:100/100
 	totalRocData[[1]] <- c(totalRocData[[1]], list(x,x,x))
 	totalRocData[[2]] <- c(totalRocData[[2]], list(mean,up,down))
 	setwd(rocPlotDir)

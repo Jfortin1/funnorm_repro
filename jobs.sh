@@ -15,24 +15,34 @@ do
 	sleep 100
 done
 
+
+# To normalize the datasets with the 5 first methods
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/norm_datasets
-# To normalize the datasets:
 for i in {1..8}
 do
 	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.norm.sh $i;
 	sleep 50
 done
 
+
+# To normalize the datasets with funnorm + noob
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/norm_datasets
-# To normalize with noob: 
+for i in {1..8}
+do
+	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.funnorm.noob.sh $i;
+	sleep 5
+done
+
+# To normalize the datasets with noob:
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/norm_datasets
 for i in {1..8}
 do
 	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.norm.noob.sh $i;
 	sleep 50
 done
 
+# To split the samples for BMIQ
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/norm_datasets
-# To split for bmiq:
 for i in {1..8}
 do
 	qsub -cwd -V -l mem_free=100G,h_vmem=120G split.bmiq.sh $i;
@@ -48,8 +58,8 @@ do
 	sleep 1
 done
 
+# To merge the normalized BMIQ samples:
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/norm_datasets
-# To create the bmiq norm:
 for i in {1..8}
 do
 	qsub -cwd -V -l mem_free=50,h_vmem=60G merge.norm.bmiq.sh $i;
@@ -57,8 +67,8 @@ do
 done
 
 
+# To merge all the normalized samples:
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/norm_datasets
-# To merge all norm:
 for i in {1..8}
 do
 	qsub -cwd -V -l mem_free=50,h_vmem=60G merge.all.norm.sh $i;
@@ -82,6 +92,17 @@ do
 	qsub -cwd -V -l jabba,mem_free=150G,h_vmem=160G create.sva.funnorm.results.sh $i;
 	sleep 500
 done
+
+
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/sva_funnorm_noob_results
+# To submit the SVA+Funnorm+Noob jobs:
+for i in {1..8}
+do
+	qsub -cwd -V -l jabba,mem_free=150G,h_vmem=160G create.sva.funnorm.noob.results.sh $i;
+	sleep 500
+done
+
+
 
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/dmps
 # To create dmps for the norm matrices:
@@ -161,6 +182,17 @@ do
 	for j in {1..100}
 	do
 		qsub -cwd -V -l jabba,mem_free=5G,h_vmem=10G create.noob.sh $k $j;
+	done
+done
+
+
+# Create noob
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
+for k in {1..5}
+do
+	for j in {1..100}
+	do
+		qsub -cwd -V -l jabba,mem_free=15G,h_vmem=20G create.norm.new.funnorm.sh $k $j;
 	done
 done
 
