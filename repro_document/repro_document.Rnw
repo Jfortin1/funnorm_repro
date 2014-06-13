@@ -224,56 +224,36 @@ The file \Rcode{create.norm.R} creates the 500 simulated validation datasets for
 
 The subfolders \fixme{names of the folders} contain the simulated datasets for the corresponding datasets. 
 
-\section{Plots included in the paper}
-
-\subsection{ROC curves}
-
-\subsubsection{Ontario-EBV}
+\section{Main results}
 
 <<>>=
-source(file.path(funnormDir, "paper_figures/generate.dis.val.roc.plots.R"))
-source(file.path(funnormDir, "paper_figures/generate.concordance.plots.R"))
-create.dis.val.roc.plots.ebv(print=FALSE)
+source(file.path(funnormDir, "paper_figures/generate.main.results.plots.R"));
+create.main.ebv()
+create.main.kirc()
+create.main.blood()
+create.main.aml()
 @
 
-\subsubsection{Ontario-Blood}
+\section{SVA,RUV and ComBat results}
 
 <<>>=
-create.dis.val.roc.plots.blood(print=FALSE)
+source(file.path(funnormDir, "paper_figures/generate.sva.ruv.results.plots.R"));
+create.sva.ruv.ebv()
+create.sva.ruv.kirc()
+create.sva.ruv.blood()
+create.sva.ruv.aml()
 @
 
-\subsubsection{KIRC}
+\section{Additional Results}
 
 <<>>=
-create.dis.val.roc.plots.kirc(print=FALSE)
+source(file.path(funnormDir, "paper_figures/generate.add.results.plots.R"));
+create.add.ebv()
+create.add.kirc()
+create.add.blood()
+create.add.aml()
 @
 
-
-\subsection{Concordance curves}
-
-\subsubsection{Ontario-EBV}
-
-<<>>=
-create.overlap.plots.ebv(print=FALSE)
-@
-
-\subsubsection{KIRC}
-
-<<>>=
-create.overlap.plots.kirc(print=FALSE)
-@
-
-\subsubsection{KIRC-27k}
-
-<<>>=
-create.overlap.plots.kirc.27k(print=FALSE)
-@
-
-\subsubsection{AML-27k}
-
-<<>>=
-create.overlap.plots.aml.27k(print=FALSE)
-@
 
 
 
