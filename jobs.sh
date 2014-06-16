@@ -251,6 +251,30 @@ do
 done
 
 
+# To create the dmps new norm for each simulation
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
+for k in {1..5}
+do
+	for j in {1..100}
+	do
+		qsub -cwd -V -l jabba,mem_free=15G,h_vmem=20G create.dmps.norm.new.sh $k $j;
+	done
+done
+
+
+
+# To create the dmps norm other for each simulation
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
+for k in {1..5}
+do
+	for j in {1..100}
+	do
+		qsub -cwd -V -l jabba,mem_free=15G,h_vmem=20G create.dmps.norm.other.sh $k $j;
+	done
+done
+
+
+
 # To create the ROC data for each simulation
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
 for k in {1..5}
@@ -271,6 +295,27 @@ do
 	done
 done
 
+
+# To create the ROC data new norm for each simulation: 
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
+for k in {1..5}
+do
+	for j in {1..100}
+	do
+		qsub -cwd -V -l jabba,mem_free=10G,h_vmem=12G create.roc.data.norm.new.sh $k $j;
+	done
+done
+
+
+# To create the ROC data norm other for each simulation: 
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
+for k in {1..5}
+do
+	for j in {1..100}
+	do
+		qsub -cwd -V -l jabba,mem_free=10G,h_vmem=12G create.roc.data.norm.other.sh $k $j;
+	done
+done
 
 
 # To create the ROC data noob for each simulation
@@ -368,48 +413,48 @@ done
 
 
 
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+# # To normalize the datasets with new approach
+# for i in {1..8}
+# do
+# 	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.norm.sh $i;
+# 	sleep 50
+# done
+
+
+
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+# # To normalize the datasets with new approach
+# for i in {1..6}
+# do
+# 	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.dmps.sh $i;
+# 	sleep 5
+# done
+
+
+#cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
 # To normalize the datasets with new approach
-for i in {1..8}
-do
-	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.norm.sh $i;
-	sleep 50
-done
+#for i in {1..3}
+#do
+#	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.roc.data.sh $i;
+#done
 
 
 
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+#cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
 # To normalize the datasets with new approach
-for i in {1..6}
-do
-	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.dmps.sh $i;
-	sleep 5
-done
+#for i in {1..3}
+#do
+#	qsub -cwd -V -l mem_free=50G,h_vmem=120G create.overlap.data.sh $i;
+#done
 
+#cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+## To normalize the datasets with new approach
+#qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.kirc.sh
 
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
+#cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
 # To normalize the datasets with new approach
-for i in {1..3}
-do
-	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.roc.data.sh $i;
-done
-
-
-
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
-# To normalize the datasets with new approach
-for i in {1..3}
-do
-	qsub -cwd -V -l mem_free=50G,h_vmem=120G create.overlap.data.sh $i;
-done
-
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
-# To normalize the datasets with new approach
-qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.kirc.sh
-
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
-# To normalize the datasets with new approach
-qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.aml.sh
+#qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.aml.sh
 
 
 
@@ -418,92 +463,92 @@ qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.aml.sh
 ## WO Dye bias normalization: 
 
 
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
-# To normalize the datasets with new approach
-for i in {1..8}
-do
-	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.norm.sh $i;
-done
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
+# # To normalize the datasets with new approach
+# for i in {1..8}
+# do
+# 	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.norm.sh $i;
+# done
 
 
 
-# Create dmps for noob+funnorm without dye bias normalization
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
-# To normalize the datasets with new approach
-for i in {1..8}
-do
-	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.dmps.sh $i;
-done
+# # Create dmps for noob+funnorm without dye bias normalization
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
+# # To normalize the datasets with new approach
+# for i in {1..8}
+# do
+# 	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.dmps.sh $i;
+# done
 
 
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
-# To normalize the datasets with new approach
-for i in {1..3}
-do
-	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.roc.data.sh $i;
-done
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
+# # To normalize the datasets with new approach
+# for i in {1..3}
+# do
+# 	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.roc.data.sh $i;
+# done
 
 
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
-# To normalize the datasets with new approach
-for i in {1..3}
-do
-	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.overlap.data.sh $i;
-done
-
-
-
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
-# To normalize the datasets with new approach
-qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.kirc.sh
-
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
-# To normalize the datasets with new approach
-qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.aml.sh
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
+# # To normalize the datasets with new approach
+# for i in {1..3}
+# do
+# 	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.overlap.data.sh $i;
+# done
 
 
 
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
+# # To normalize the datasets with new approach
+# qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.kirc.sh
 
-## Plate: 
-
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
-# To normalize the datasets with new approach
-for i in {1..8}
-do
-	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.norm.sh $i;
-done
-
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
-# To normalize the datasets with new approach
-for i in {1..8}
-do
-	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.dmps.sh $i;
-done
-
-
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
-# To normalize the datasets with new approach
-for i in {1..3}
-do
-	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.roc.data.sh $i;
-done
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_2
+# # To normalize the datasets with new approach
+# qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.aml.sh
 
 
 
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
-# To normalize the datasets with new approach
-for i in {1..3}
-do
-	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.overlap.data.sh $i;
-done
 
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
-# To normalize the datasets with new approach
-qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.kirc.sh
+# ## Plate: 
 
-cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
-# To normalize the datasets with new approach
-qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.aml.sh
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
+# # To normalize the datasets with new approach
+# for i in {1..8}
+# do
+# 	qsub -cwd -V -l mem_free=100G,h_vmem=120G create.norm.sh $i;
+# done
+
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
+# # To normalize the datasets with new approach
+# for i in {1..8}
+# do
+# 	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.dmps.sh $i;
+# done
+
+
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
+# # To normalize the datasets with new approach
+# for i in {1..3}
+# do
+# 	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.roc.data.sh $i;
+# done
+
+
+
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
+# # To normalize the datasets with new approach
+# for i in {1..3}
+# do
+# 	qsub -cwd -V -l jabba,mem_free=20G,h_vmem=22G create.overlap.data.sh $i;
+# done
+
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
+# # To normalize the datasets with new approach
+# qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.kirc.sh
+
+# cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach_3
+# # To normalize the datasets with new approach
+# qsub -cwd -V -l mem_free=50G,h_vmem=120G external.validation.aml.sh
 
 
 
