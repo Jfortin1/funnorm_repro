@@ -52,11 +52,11 @@ create.sva.ruv.ebv <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro",
 		setwd(output.dir)
 
 		pdf("Lympho_PartialROC_MainMethods_SVARUV.pdf", width = 5, height = 5)
-		printROCFromROCData(rocRUV, xcutoff = 0.1, main = "", colors = colorsRUV, names = namesRUV, lty = c(1, 1, 1, 2, 1, 2), lwd = c(3, 3, 3, 2, 3, 2))
+		printROCFromROCData(rocRUV, xcutoff = 0.1, main = "", colors = colorsRUV, names = namesRUV, lty = rep(1,10), lwd = c(3, 3, 3, 3, 3, 2))
 		dev.off()
 
 		pdf("Lympho_CompleteROC_MainMethods_SVARUV.pdf", width = 5, height = 5)
-		printROCFromROCData(rocRUV, xcutoff = 1, main = "", colors = colorsRUV, names = namesRUV, lty = c(1, 1, 1, 2, 1, 2), lwd = c(3, 3, 3, 2, 3, 2))
+		printROCFromROCData(rocRUV, xcutoff = 1, main = "", colors = colorsRUV, names = namesRUV, lty = rep(1,10), lwd = c(3, 3, 3, 3, 3, 2))
 		dev.off()
 
 	}
@@ -129,18 +129,16 @@ create.sva.ruv.kirc <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro"
 		setwd(output.dir)
 
 		pdf("KIRC_PartialROC_MainMethods_SVARUV.pdf", width = 5, height = 5)
-		printROCFromROCData(rocRUV, xcutoff = 0.1, ycutoff = 0.4, main = "", colors = colorsCombat, names = namesCombat, lty = c(1, 1, 
-			1, 1, 2, 1, 2), lwd = c(3, 3, 3, 3, 2, 3, 2))
+		printROCFromROCData(rocRUV, xcutoff = 0.1, ycutoff = 0.4, main = "", colors = colorsCombat, names = namesCombat, lty = rep(1,10), lwd = c(3, 3, 3, 3, 3, 3, 2))
 		dev.off()
 
 		pdf("KIRC_CompleteROC_MainMethods_SVARUV.pdf", width = 5, height = 5)
-		printROCFromROCData(rocRUV, xcutoff = 1, main = "", colors = colorsCombat, names = namesCombat, lty = c(1, 1, 1, 1, 2, 1, 2), 
-			lwd = c(3, 3, 3, 3, 2, 3, 2))
+		printROCFromROCData(rocRUV, xcutoff = 1, main = "", colors = colorsCombat, names = namesCombat, lty = rep(1,10), 
+			lwd = c(3, 3, 3, 3, 3, 3, 2))
 		dev.off()
 
 		pdf("KIRC_Concordance_27kValidation_MainMethods_SVARUV.pdf", width = 5, height = 5)
-		printOverlapFromData(overlapRUV, xcutoff = 15000, ycutoff = 0.3, main = "", colors = colorsCombat, names = namesCombat, lty = c(1, 
-			1, 1, 1, 2, 1, 2), lwd = c(3, 3, 3, 3, 2, 3, 2))
+		printOverlapFromData(overlapRUV, xcutoff = 15000, ycutoff = 0.3, main = "", colors = colorsCombat, names = namesCombat, lty = rep(1,10), lwd = c(3, 3, 3, 3, 3, 3, 2))
 		dev.off()
 
 
@@ -196,11 +194,11 @@ create.sva.ruv.blood <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro
 		setwd(output.dir)
 
 		pdf("Blood_PartialROC_MainMethods_SVARUV.pdf", width = 5, height = 5)
-		printROCFromROCData(rocRUV, xcutoff = 0.1, main = "", colors = colorsRUV, names = namesRUV, lty = c(1, 1, 1, 2, 1, 2), lwd = c(3, 3, 3, 2, 3, 2))
+		printROCFromROCData(rocRUV, xcutoff = 0.1, main = "", colors = colorsRUV, names = namesRUV, lty = rep(1,10), lwd = c(3, 3, 3, 3, 3, 3))
 		dev.off()
 
 		pdf("Blood_CompleteROC_MainMethods_SVARUV.pdf", width = 5, height = 5)
-		printROCFromROCData(rocRUV, xcutoff = 1, main = "", colors = colorsRUV, names = namesRUV, lty = c(1, 1, 1, 2, 1, 2), lwd = c(3, 3, 3, 2, 3, 2))
+		printROCFromROCData(rocRUV, xcutoff = 1, main = "", colors = colorsRUV, names = namesRUV, lty = rep(1,10), lwd = c(3, 3, 3, 3, 3, 2))
 		dev.off()
 	}
 
