@@ -7,15 +7,16 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 	output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures_repro", 
 	print = TRUE, save = TRUE) {
 
-library(scales)
-sampleSizeDir <- file.path(input.dir,"simulation_samplesize")
-setwd(sampleSizeDir)
-load("ci.data.Rda")
-setwd(output.dir)
+	library(scales)
+	sampleSizeDir <- file.path(input.dir,"simulation_samplesize")
+	setwd(sampleSizeDir)
+	load("ci.data.Rda")
+	setwd(output.dir)
 
-n.vector <- c(10,20,30,50,80)
-setwd(sampleSizeDir)
-library(scales)
+	n.vector <- c(10,20,30,50,80)
+	setwd(output.dir)
+
+	ci.data = results
 
 	if (print){
 			for (i in 1:5){
