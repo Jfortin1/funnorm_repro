@@ -259,6 +259,12 @@ create.add.aml()
 
 \subsection{ROC curves for sample size simulation}
 
+<<>>=
+source(file.path(funnormDir, "paper_figures/generate.sample.size.simulation.plots.R"));
+create.sample.size.sim.figures()
+@
+
+
 \subsection{Curves for sensitivity analysis}
 \end{document}
 
