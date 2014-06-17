@@ -58,7 +58,7 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 
 	if (save){
 
-		for (i in 5:1{
+		for (i in 5:1){
 			pdf("sample.size.simultation.pdf",height=5, width=5)
 			xlim=c(0,0.1)
 			plot(ci.data[[i]][[8]]$grid, 
