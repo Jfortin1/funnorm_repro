@@ -137,8 +137,6 @@ qsub -cwd -V -l jabba,mem_free=20G,h_vmem=30G external.validation.kirc.sh;
 
 
 
-
-
 # To create overlap data: (only relevant for 1 to 3)
 cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/sensitivity_analysis
 for i in {1..25}
@@ -173,6 +171,8 @@ do
 		qsub -cwd -V -l jabba,mem_free=10G,h_vmem=12G create.norm.other.sh $k $j;
 	done
 done
+
+
 
 
 # Create raw
@@ -261,6 +261,30 @@ do
 	done
 done
 
+# To create the dmps bmiq for each simulation
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
+for k in {1..5}
+do
+	for j in {1..100}
+	do
+		qsub -cwd -V -l jabba,mem_free=15G,h_vmem=20G create.dmps.bmiq.sh $k $j;
+	done
+done
+
+
+
+
+# To create the dmps norm other for each simulation
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
+for k in {1..5}
+do
+	for j in {1..100}
+	do
+		qsub -cwd -V -l jabba,mem_free=15G,h_vmem=20G create.dmps.norm.other.sh $k $j;
+	done
+done
+
+
 
 
 # To create the dmps norm other for each simulation
@@ -316,6 +340,18 @@ do
 		qsub -cwd -V -l jabba,mem_free=10G,h_vmem=12G create.roc.data.norm.other.sh $k $j;
 	done
 done
+
+
+# To create the ROC data bmiq for each simulation: 
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/simulation_samplesize
+for k in {1..5}
+do
+	for j in {1..100}
+	do
+		qsub -cwd -V -l jabba,mem_free=10G,h_vmem=12G create.roc.data.bmiq.sh $k $j;
+	done
+done
+
 
 
 # To create the ROC data noob for each simulation
