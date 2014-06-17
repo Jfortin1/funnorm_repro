@@ -11,8 +11,16 @@ sampleSizeDir <- paste0(funnormDir, "/simulation_samplesize")
 rocDir <- paste0(sampleSizeDir, "/rocData")
 rocPlotDir <- paste0(sampleSizeDir,"/roc_plots")
 
-setwd(scriptDir)
+# There are 6 different folders:
+# 1. rocData_raw
+# 2. rocData
+# 3. rocData_noob
+# 4. rocData_bmiq
+# 5. rocData_norm_other
+# 6. rocData_norm_new
 
+names <- c("_raw","","_noob","_bmiq","_norm_other","_norm_new")
+dir   <- paste0(sampleSizeDir,"/rocData",names)
 
 return.ci.roc.curves <- function(matrix.x, matrix.y){
 	grid <- seq(0,1,0.001)
@@ -38,139 +46,55 @@ k_vector <- c(100000,100,100000)
 ci_list  <- vector("list", length(n.vector))
 
 
+method.names <- c("raw","funnorm","noob","bmiq","quantile","swan","dasen","funnorm.noob")
 
+
+results <- vector("list",5)
+for (i in 1:5){
+	results[[i]] <- vector("list", length(method.names))
+}
 for (i in 1:5){
 	n <- n.vector[i]
-	setwd(rocDir)
 	j=1
+	kk=1
+	setwd(dir[kk])
 	load(paste0("rocData_ontario_ebv_n_",n,"_B_",j,".Rda"))
 	totalRocData <- rocData
-	for (j in 2:B){
+	for (kk in 2:length(dir)){
+		setwd(dir[kk])
 		load(paste0("rocData_ontario_ebv_n_",n,"_B_",j,".Rda"))
 		totalRocData[[1]] <- c(totalRocData[[1]],rocData[[1]])
 		totalRocData[[2]] <- c(totalRocData[[2]],rocData[[2]])
-		#print(j)
 	}
-
+	for (kk in 1:length(dir)){
+		for (j in 2:B){
+			setwd(dir[[kk]])
+			load(paste0("rocData_ontario_ebv_n_",n,"_B_",j,".Rda"))
+			totalRocData[[1]] <- c(totalRocData[[1]],rocData[[1]])
+			totalRocData[[2]] <- c(totalRocData[[2]],rocData[[2]])
+		}
+	}
+	
 	l <- length(totalRocData[[1]][[1]])
-	matrix.y <- matrix(unlist(totalRocData[[2]]),nrow=l)
-	matrix.x <- matrix(unlist(totalRocData[[1]]),nrow=l)
-	ci_list[[i]] <- return.ci.roc.curves(matrix.x=matrix.x,matrix.y=matrix.y)
-
+	for (kk in 1:length(method.names)){
+		indices <- names(totalRocData[[1]]) %in% method.names[kk]
+		matrix.y <- matrix(unlist(totalRocData[[2]][indices]),nrow=l)
+		matrix.x <- matrix(unlist(totalRocData[[1]][indices]),nrow=l)
+		ci <- return.ci.roc.curves(matrix.x=matrix.x,matrix.y=matrix.y)
+		results[[i]][[kk]] <- ci
+	}
+	print(i)
 }
 
+names(results) <- n.vector
 for (i in 1:5){
-
-
-
-	setwd(rocPlotDir)
-	load(paste0("data.n.",n.vector[i],".Rda"))
-	rocData <- totalRocData
-	
-	load(paste0("data.raw.n.",n.vector[i],".Rda"))
-	
-	rocData[[1]] <- c(rocData[[1]],totalRocData[[1]][101])
-	rocData[[2]] <- c(rocData[[2]],totalRocData[[2]][101])
-	load(paste0("data.noob.n.",n.vector[i],".Rda"))
-	rocData[[1]] <- c(rocData[[1]],totalRocData[[1]][101])
-	rocData[[2]] <- c(rocData[[2]],totalRocData[[2]][101])
-	load(paste0("data.n.",n.vector[i],".Rda"))
-	rocData[[1]] <- c(rocData[[1]],totalRocData[[1]][101])
-	rocData[[2]] <- c(rocData[[2]],totalRocData[[2]][101])
-
-	setwd(rocPlotDir)
-	pdf(paste0("roc.plot.n.all",n.vector[i],".pdf"))
-	printROCFromROCData(rocData, xcutoff=0.1, main="", colors=colors, names=names, lty=lty)
-	dev.off()
-
+	names(results[[i]]) <- method.names
 }
 
-# # Alternative
-# for (i in 1:5){
+setwd(sampleSizeDir)
+ci.data <- results
+save(results, file="ci.data.Rda")
 
-# 	B=100
-# 	colors <- rep("grey85",B)
-# 	colors <- c(colors, "black","black","black","orange","deeppink3")
-# 	lty <- rep(1,B)
-# 	lty <- c(lty,1,3,3,1,1,1)
-# 	names <- rep("",B)
-
-
-# 	setwd(rocPlotDir)
-# 	load(paste0("data.raw.n.",n.vector[i],".Rda"))
-# 	rocData <- totalRocData
-	
-# 	load(paste0("data.noob.n.",n.vector[i],".Rda"))
-# 	rocData[[1]] <- c(rocData[[1]],totalRocData[[1]][101])
-# 	rocData[[2]] <- c(rocData[[2]],totalRocData[[2]][101])
-# 	load(paste0("data.n.",n.vector[i],".Rda"))
-# 	rocData[[1]] <- c(rocData[[1]],totalRocData[[1]][101])
-# 	rocData[[2]] <- c(rocData[[2]],totalRocData[[2]][101])
-
-# 	setwd(rocPlotDir)
-# 	pdf(paste0("roc.plot.n.all",n.vector[i],".pdf"))
-# 	printROCFromROCData(rocData, xcutoff=0.1, main="", colors=colors, names=names, lty=lty)
-# 	dev.off()
-
-# }
-
-# # Alternative 2
-# for (i in 1:5){
-
-# 	B=100
-# 	colors <- rep("grey85",B)
-# 	colors <- c(colors, "black","black","black","orange","orange","orange","deeppink3","deeppink3","deeppink3")
-# 	lty <- rep(1,B)
-# 	lty <- c(lty,1,3,3,1,3,3,1,3,3)
-# 	names <- rep("",B)
-
-
-# 	setwd(rocPlotDir)
-# 	load(paste0("data.raw.n.",n.vector[i],".Rda"))
-# 	rocData <- totalRocData
-	
-# 	load(paste0("data.noob.n.",n.vector[i],".Rda"))
-# 	rocData[[1]] <- c(rocData[[1]],totalRocData[[1]][101:103])
-# 	rocData[[2]] <- c(rocData[[2]],totalRocData[[2]][101:103])
-# 	load(paste0("data.n.",n.vector[i],".Rda"))
-# 	rocData[[1]] <- c(rocData[[1]],totalRocData[[1]][101:103])
-# 	rocData[[2]] <- c(rocData[[2]],totalRocData[[2]][101:103])
-
-# 	setwd(rocPlotDir)
-# 	pdf(paste0("roc.plot.n.all",n.vector[i],".pdf"))
-# 	printROCFromROCData(rocData, xcutoff=0.1, main="", colors=colors, names=names, lty=lty)
-# 	dev.off()
-
-# }
-
-
-# # Alternative 3
-# for (i in 1:5){
-
-# 	B=100
-# 	colors <- rep("grey92",B)
-# 	colors <- c(colors, "black","black","black","deeppink3","deeppink3","deeppink3")
-# 	lty <- rep(1,B)
-# 	lty <- c(lty,1,3,3,1,3,3)
-# 	lwd <- rep(1,B)
-# 	lwd <- c(lwd, 2,1,1,2,1,1)
-# 	names <- rep("",B)
-
-
-# 	setwd(rocPlotDir)
-# 	load(paste0("data.raw.n.",n.vector[i],".Rda"))
-# 	rocData <- totalRocData
-
-# 	load(paste0("data.n.",n.vector[i],".Rda"))
-# 	rocData[[1]] <- c(rocData[[1]],totalRocData[[1]][101:103])
-# 	rocData[[2]] <- c(rocData[[2]],totalRocData[[2]][101:103])
-
-# 	setwd(rocPlotDir)
-# 	pdf(paste0("roc.plot.n.all.partial",n.vector[i],".pdf"))
-# 	printROCFromROCData(rocData, xcutoff=0.1, main="", colors=colors, names=names, lty=lty, lwd=lwd)
-# 	dev.off()
-
-# }
 
 
 
