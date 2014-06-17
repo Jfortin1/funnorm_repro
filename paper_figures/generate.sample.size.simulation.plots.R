@@ -9,7 +9,9 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 
 library(scales)
 sampleSizeDir <- file.path(input.dir,"simulation_samplesize")
+setwd(sampleSizeDir)
 load("ci.data.Rda")
+setwd(output.dir)
 
 n.vector <- c(10,20,30,50,80)
 setwd(sampleSizeDir)
