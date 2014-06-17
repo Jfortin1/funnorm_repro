@@ -19,7 +19,7 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 	ci.data = results
 
 	if (print){
-			for (i in 1:5){
+			for (i in 5:1){
 			xlim=c(0,0.1)
 			plot(ci.data[[i]][[8]]$grid, 
 				ci.data[[i]][[8]]$mean, 
@@ -41,7 +41,7 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 			lines(ci.data[[i]][[j]]$grid, ci.data[[i]][[j]]$up, col=color, lty=3)
 			lines(ci.data[[i]][[j]]$grid, ci.data[[i]][[j]]$down, col=color, lty=3)
 
-			j=3
+			j=1
 			color = "black"
 			polygon(x=c(rev(ci.data[[i]][[j]]$grid),(ci.data[[i]][[j]]$grid)), 
 				y=c(rev(ci.data[[i]][[j]]$down),(ci.data[[i]][[j]]$up)),, 
@@ -58,7 +58,7 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 
 	if (save){
 
-		for (i in 1:5){
+		for (i in 5:1{
 			pdf("sample.size.simultation.pdf",height=5, width=5)
 			xlim=c(0,0.1)
 			plot(ci.data[[i]][[8]]$grid, 
@@ -81,7 +81,7 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 			lines(ci.data[[i]][[j]]$grid, ci.data[[i]][[j]]$up, col=color, lty=3)
 			lines(ci.data[[i]][[j]]$grid, ci.data[[i]][[j]]$down, col=color, lty=3)
 
-			j=3
+			j=1
 			color = "black"
 			polygon(x=c(rev(ci.data[[i]][[j]]$grid),(ci.data[[i]][[j]]$grid)), 
 				y=c(rev(ci.data[[i]][[j]]$down),(ci.data[[i]][[j]]$up)),, 
