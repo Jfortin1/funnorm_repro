@@ -49,7 +49,7 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 			lines(ci.data[[i]][[j]]$grid, ci.data[[i]][[j]]$up, col=color, lty=3)
 			lines(ci.data[[i]][[j]]$grid, ci.data[[i]][[j]]$down, col=color, lty=3)
 
-			legend("bottomright",c("Raw","Funnorm + Noob"), col=c("black","deeppink2"), lty=1, bty="n")
+			legend("bottomright",c("Raw","Funnorm"), col=c("black","deeppink2"), lty=1, bty="n")
 		}
 
 	}
@@ -90,7 +90,7 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 			lines(ci.data[[i]][[j]]$grid, ci.data[[i]][[j]]$up, col=color, lty=3)
 			lines(ci.data[[i]][[j]]$grid, ci.data[[i]][[j]]$down, col=color, lty=3)
 
-			legend("bottomright",c("Raw","Funnorm + Noob"), col=c("black","deeppink2"), lty=1, bty="n")
+			legend("bottomright",c("Raw","Funnorm"), col=c("black","deeppink2"), lty=1, bty="n")
 			dev.off()
 		}
 	}
