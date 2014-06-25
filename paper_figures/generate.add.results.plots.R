@@ -8,7 +8,7 @@ colors7 <- c("black", "deepskyblue2", "deeppink2", "olivedrab", "red", "slateblu
 colors7 <- c("black", "deepskyblue2", "orange", "olivedrab", "red", "slateblue4", "deeppink2")
 names7 <- c("Raw", "Quantile", "noob", "dasen", "SWAN", "BMIQ", "Funnorm")
 names7 <- c("Raw", "Quantile", "Funnorm", "dasen", "SWAN", "BMIQ", "Funnorm+Noob")
-names7 <- c("Raw", "Quantile", "noob","dasen", "SWAN", "BMIQ", "Funnorm+Noob")
+names7 <- c("Raw", "Quantile", "noob","dasen", "SWAN", "BMIQ", "Funnorm")
 vector7 <- c(1, 2, 6, 4, 5, 7, 8)
 vector7 <- c(1, 2, 6, 4, 5, 7, 8)
 

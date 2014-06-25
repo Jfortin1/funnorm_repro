@@ -11,10 +11,8 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 	sampleSizeDir <- file.path(input.dir,"simulation_samplesize")
 	setwd(sampleSizeDir)
 	load("ci.data.Rda")
-	setwd(output.dir)
 
 	n.vector <- c(10,20,30,50,80)
-	setwd(output.dir)
 
 	ci.data = results
 
@@ -57,9 +55,10 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 	}
 
 	if (save){
+		setwd(output.dir)
 
 		for (i in 5:1){
-			pdf("sample.size.simultation.pdf",height=5, width=5)
+			pdf(paste0("sample.size.simultation.n.",n.vector[i],".pdf"),height=5, width=5)
 			xlim=c(0,0.1)
 			plot(ci.data[[i]][[8]]$grid, 
 				ci.data[[i]][[8]]$mean, 
@@ -92,8 +91,8 @@ create.sample.size.sim.figures <- function(input.dir = "/Users/Jean-Philippe/fun
 			lines(ci.data[[i]][[j]]$grid, ci.data[[i]][[j]]$down, col=color, lty=3)
 
 			legend("bottomright",c("Raw","Funnorm + Noob"), col=c("black","deeppink2"), lty=1, bty="n")
+			dev.off()
 		}
-		dev.off()
 	}
 
 
