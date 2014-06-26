@@ -14,21 +14,28 @@ dataset_names <- c(paste0("dis_",dataset_names), paste0("val_",dataset_names))
 dataset_names <- c(dataset_names,"aml","ontario_gender")
 
 
-
 k_vector <- c(14,36,0,11,5,3,0,21)
 setwd(ruvDir)
 for (i in 1:8){
 	k <- k_vector[i]
-	data.file <- paste0("ruv_results_",dataset_names[i],"_k_",k,".Rda")
-	load(data.file)
-	object <- ruv.results
-	p <- t(object$p)
-	dmps <- cbind(t(object$t),p)
-	dmps <- as.data.frame(dmps)
-	colnames(dmps) <- c("f","p.val")
-	dmps <- dmps[order(dmps$p.val),]
-	dmps <- list(ruv=dmps)
-	save(dmps, file=paste0("ruv_dmps_",dataset_names[i],".Rda"))
+	if (k!=0){
+		data.file <- paste0("ruv_results_",dataset_names[i],"_k_",k,".Rda")
+		load(data.file)
+		object <- ruv.results
+		p <- t(object$p)
+		dmps <- cbind(t(object$t),p)
+		dmps <- as.data.frame(dmps)
+		colnames(dmps) <- c("f","p.val")
+		dmps <- dmps[order(dmps$p.val),]
+		dmps <- list(ruv=dmps)
+		save(dmps, file=paste0("ruv_dmps_",dataset_names[i],".Rda"))
+	} else {
+		setwd(paste0(funnormDir, "/dmps"))
+		load(paste0("dmps_", dataset_names[i],".Rda"))
+		dmps <- list(ruv=dmps[[1]])
+		setwd(ruvDir)
+		save(dmps, file=paste0("ruv_dmps_",dataset_names[i],".Rda"))
+	}
 	print(i)
 }
 
