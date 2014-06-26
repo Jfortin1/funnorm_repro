@@ -217,6 +217,7 @@ create.sva.ruv.aml <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro",
 
 
 	source(file.path(input.dir, "scripts/printOverlapFromData.R"))
+	source(file.path(input.dir, "scripts/printROCFromROCData.R"))
 	data.dir <- file.path(input.dir, "external_validations")
 	setwd(data.dir)
 
