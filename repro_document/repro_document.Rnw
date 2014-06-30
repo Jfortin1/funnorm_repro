@@ -194,7 +194,7 @@ The results will be stored in the files \Rcode{overlapData\_XXX\_YYY.Rda} where 
 
 \section{External validation with 27k data}
 
-The directory \Rcode{/external\_validations} contain the script to create the overlap and ROC data of the KIRC and AML datasets when the 27K data DMPs results are used as the truth. 
+The directory \Rcode{/external\_validations} contains the script to create the overlap and ROC data of the KIRC and AML datasets when the 27K data DMPs results are used as the truth. 
 
 The scripts \Rcode{external.validation.kirc.R} and \Rcode{external.validation.aml.R} create the concordance curves and ROC curves data for the KIRC and AML datasets, respectively.
 
@@ -204,11 +204,23 @@ For the ROC curves data, the results are stored in the files \Rcode{rocdata\_27k
 
 \section{External validation with the WGBS data}
 
-To assess the quality of the top DMPs for the Ontario-EBV dataset, we use the external dataset \fixme{reference} that used whole-genome bisulfite sequencing. The data can be found at \Rcode{/external\_validations} \fixme{name of the file}
+To assess the quality of the top DMPs for the Ontario-EBV dataset, we use an external dataset from whole-genome bisulfite sequencing as described in the manuscript. The blocks and DMPs data from the WGBS can be found at \Rcode{/external\_validations} under the names \Rcode{blocks\_ebvs\_null.rda} and \Rcode{dmrs\_ebv\_null.rda} respectively. The script \Rcode{external.validation.ebv.R} will produce the overlap/replication percentages for each dataset and will save the results in the file \Rcode{data.wgbs.replication.Rda}.
 
-The script \Rcode{external.validation.ebv.R} 
+
+\section{Sex analysis}
+
+\subsubsection*{Creation of the probes X-inactivation status}
+
+The file \Rcode{nature03479-s9.xls}, which was downloaded from the supplemental material at \url{http://www.nature.com/nature/journal/v434/n7031/full/nature03479.html}, contains the X-inactivation status that was used throughout the present paper. The script \Rcode{create.sex.probes.R} extracts the information of the file \Rcode{nature03479-s9.xls} to assign an X-inactivation status for each of the X-chromosome probes of the 450K array. The status is saved in the file \Rcode{x.probes.status.Rda}; the intermediate file \Rcode{x.inactivation.data.Rda} is a representation of \Rcode{nature03479-s9.xls} in a format readable by the R software. The script \Rcode{create.x.y.probes.R} extracts the probe names for the probes mapping to the X and Y chromosome and save them in the files \Rcode{chrY.Rda} and \Rcode{chrX.Rda}. 
+
+\subsubsection*{Creation of the ROC data for the Ontario-Gender dataset}
+
+The directory \Rcode{/roc\_data\_gender} contains the script \Rcode{create.roc.data.gender.R} which generates the file \Rcode{rocDataGender.Rda} that contains the ROC curves data for the sex prediction using the X-inactivation status described above. 
+
 
 \section{Sensitivity analysis}
+
+We have run Funnorm for $k=1,\ldots,10$ number of principal components. The directory \Rcode{/sensitivity\_analysis} contains the different scripts to produce the sensitivity analysis. The script \Rcode{sensitiviy.norm.R} creates the normalized dataset for each $k$; the normalized data will be saved in \Rcode{/sensitivity\_analysis/norm\_datasets}.  The scripts \Rcode{sensitivity.dmps.R} and \Rcode{sensitivity.roc.R} create the DMPs and ROC data for each value of $k$, for each dataset. 
 
 \section{Sample size simulation}
 
@@ -224,56 +236,62 @@ The file \Rcode{create.norm.R} creates the 500 simulated validation datasets for
 
 The subfolders \fixme{names of the folders} contain the simulated datasets for the corresponding datasets. 
 
-\section{Main results}
+\section{Reproducible plots}
+\subsection*{Main results}
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.main.results.plots.R"));
-create.main.ebv()
-create.main.kirc()
-create.main.blood()
-create.main.aml()
+create.main.ebv(print=FALSE)
+create.main.kirc(print=FALSE)
+create.main.blood(print=FALSE)
+create.main.aml(print=FALSE)
 
 @
 
 
 
-\section{SVA,RUV and ComBat results}
+\subsection*{SVA,RUV and ComBat results}
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.sva.ruv.results.plots.R"));
-create.sva.ruv.ebv()
-create.sva.ruv.kirc()
-create.sva.ruv.blood()
-create.sva.ruv.aml()
+create.sva.ruv.ebv(print=FALSE)
+create.sva.ruv.kirc(print=FALSE)
+create.sva.ruv.blood(print=FALSE)
+create.sva.ruv.aml(print=FALSE)
 @
 
 
-\section{Sex results}
+\subsection*{Sex results}
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.roc.gender.plots.R"));
-create.roc.gender()
+create.roc.gender(print=FALSE)
 @
 
-
-\section{Additional Results}
+\subsection*{Additional Results}
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.add.results.plots.R"));
-create.add.ebv()
-create.add.kirc()
-create.add.blood()
-create.add.aml()
+create.add.ebv(print=FALSE)
+create.add.kirc(print=FALSE)
+create.add.blood(print=FALSE)
+create.add.aml(print=FALSE)
 @
 
-\subsection{ROC curves for sample size simulation}
+\subsection*{Dotplot for WGBS validation}
+
+<<>>=
+source(file.path(funnormDir, "paper_figures/generate.dot.plot.R"));
+create.dot.plot(print=FALSE)
+@
+
+\subsection*{ROC curves for sample size simulation}
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.sample.size.simulation.plots.R"));
-create.sample.size.sim.figures()
+create.sample.size.sim.figures(print=FALSE)
 @
 
-
-\subsection{Curves for sensitivity analysis}
+\subsection*{Curves for sensitivity analysis}
 \end{document}
 
