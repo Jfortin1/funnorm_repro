@@ -3,7 +3,7 @@
                                main, 
                                colors, 
                                lty,
-                               names=names(data), lwd=rep(1,length(colors))){
+                               names=names(data), lwd=rep(1,length(colors)), legend=TRUE){
   	
 
 		plot(c(0,xcutoff),c(ycutoff,1), 
@@ -30,6 +30,9 @@
 			abline(v=0.05, lty=1,lwd=2)
 		}
 		
-		legend("bottomright",names,lwd=1.4,col=colors, lty=lty, bty="n")
+		if (legend){
+			legend("bottomright",names,lwd=1.4,col=colors, lty=lty, bty="n")
+		}
+		
 
 	}

@@ -3,7 +3,7 @@
                                main, 
                                colors, 
                                lty,
-                               names,lwd=rep(1,length(colors))){
+                               names,lwd=rep(1,length(colors)), legend=TRUE){
   	
 
 
@@ -21,8 +21,9 @@
 		}
 		
 
-		
+		if (legend){
 		 legend("bottomright",names,lwd=2,col=colors, lty=lty, cex=1, bty="n")
+		}
 
 	}
 	

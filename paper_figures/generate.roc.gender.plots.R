@@ -77,10 +77,10 @@ create.roc.gender <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro",
 	if (print) {
 
 
-		printROCFromROCData(roc4, xcutoff = 0.1, main = "", colors = colors4, names = names4, lty = rep(1, 10), lwd = rep(3, 10))
-		#printROCFromROCData(roc4, xcutoff = 1, main = "", colors = colors4, names = names4, lty = rep(1, 10), lwd = rep(3, 10))
-		printROCFromROCData(roc7, xcutoff = 0.1, main = "", colors = colors7, names = names7, lty = rep(1, 10), lwd = rep(2, 10))
-		#printROCFromROCData(roc7, xcutoff = 1, main = "", colors = colors7, names = names7, lty = rep(1, 10), lwd = rep(2, 10))
+		#printROCFromROCData(roc4, xcutoff = 0.1, main = "", colors = colors4, names = names4, lty = rep(1, 10), lwd = rep(3, 10))
+		printROCFromROCData(roc4, xcutoff = 1, main = "", colors = colors4, names = names4, lty = rep(1, 10), lwd = rep(3, 10))
+		#printROCFromROCData(roc7, xcutoff = 0.1, main = "", colors = colors7, names = names7, lty = rep(1, 10), lwd = rep(2, 10))
+		printROCFromROCData(roc7, xcutoff = 1, main = "", colors = colors7, names = names7, lty = rep(1, 10), lwd = rep(2, 10))
 	}
 
 
