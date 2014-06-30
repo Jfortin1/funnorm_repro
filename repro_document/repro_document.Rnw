@@ -232,7 +232,10 @@ create.main.ebv()
 create.main.kirc()
 create.main.blood()
 create.main.aml()
+
 @
+
+
 
 \section{SVA,RUV and ComBat results}
 
@@ -243,6 +246,15 @@ create.sva.ruv.kirc()
 create.sva.ruv.blood()
 create.sva.ruv.aml()
 @
+
+
+\section{Sex results}
+
+<<>>=
+source(file.path(funnormDir, "paper_figures/generate.roc.gender.plots.R"));
+create.roc.gender()
+@
+
 
 \section{Additional Results}
 
