@@ -9,11 +9,21 @@
  		
  		load(file.path(dir,"cross.probes.info.rda"))
  		load(file.path(dir,"sex_analysis/x.probes.status.Rda"))
+ 		load(file.path(dir,"sex_analysis/chrX.Rda"))
+ 		load(file.path(dir,"sex_analysis/chrY.Rda"))
+
+
+
  		crossProbes <- cross.probes.info$TargetID # 29233 probes
 
- 		# To create the probes to remove: 
- 		sexProbes <- setdiff(inactivated.x.probes, crossProbes) # 1678 probes
- 		toRemove <- union(crossProbes, unknown.x.probes) # unknown probes:  9414 probes
+ 		# inactivated.x.probes : 1678
+ 		# unknown.x.probes: 9414 
+ 		# escaped.x.probes: 140
+ 		# chrY: 416
+ 		# chrX: 11232
+ 		sexProbes <- union(chrY, inactivated.x.probes) # 2094
+ 		sexProbes <- setdiff(sexProbes, crossProbes) # 1877 left probes
+ 		toRemove <- union(crossProbes, unknown.x.probes) # 37953
  		# 140 that escape. 
 	    
 		specList <- vector("list",length(dataset))
