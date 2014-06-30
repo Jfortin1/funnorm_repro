@@ -293,5 +293,11 @@ create.sample.size.sim.figures(print=FALSE)
 @
 
 \subsection*{Curves for sensitivity analysis}
+
+<<>>=
+source(file.path(funnormDir, "paper_figures/generate.sensitivity.analysis.plots.R"));
+create.sens.analysis(print=FALSE)
+@
+
 \end{document}
 
