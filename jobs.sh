@@ -447,6 +447,38 @@ done
 
 
 
+# Sensitivity analysis: creation of the normalized datasets:
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/sensitivity_analysis
+for i in {1..8}
+do
+	for k in {1..10}
+	do
+		qsub -cwd -V -l jabba,mem_free=20G,h_vmem=30G sensitivity.norm.sh $i $k;
+	done
+done
+
+# Sensitivity analysis: creation of the  dmps:
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/sensitivity_analysis
+for i in {1..8}
+do
+	for k in {1..10}
+	do
+		qsub -cwd -V -l jabba,mem_free=5G,h_vmem=6G sensitivity.dmps.sh $i $k;
+	done
+done
+
+
+
+# Sensitivity analysis: creation of the  dmps:
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/sensitivity_analysis
+for i in {1..8}
+do
+	for k in {1..10}
+	do
+		qsub -cwd -V -l jabba,mem_free=5G,h_vmem=6G sensitivity.dmps.sh $i $k;
+	done
+done
+
 
 
 # cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
