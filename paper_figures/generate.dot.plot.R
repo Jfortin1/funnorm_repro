@@ -10,6 +10,9 @@ names7 <- c("Raw", "Quantile", "Funnorm","noob","dasen", "SWAN", "BMIQ")
 vector7 <- c(1, 2, 6, 4, 5, 7, 8)
 vector7 <- c(1, 2, 6, 4, 5, 7, 8)
 vector7 <- c(1, 2, 8, 6, 4, 5, 7)
+vector7 <- c(1, 2, 3, 8, 6, 4, 5, 7)
+names7 <- c("Raw", "Quantile","Funnorm", "Funnorm w/noob","noob","dasen", "SWAN", "BMIQ")
+colors7 <- c("black", "deepskyblue2", "deeppink4","deeppink1","orange", "olivedrab", "red", "slateblue4")
 
 
 
@@ -24,8 +27,8 @@ load(file.path(input.dir,"external_validations/data.wgbs.replication.Rda"))
 
 setwd(output.dir)
 if (save){
-	pdf("Lympho_Dotplot.pdf", width=3, height=5)
-	plot(1:7, 
+	pdf("Lympho_Dotplot.pdf", width=3, height=4)
+	plot(1:8, 
 	     data.wgbs.replication[vector7,4], 
 	     bty="n", 
 	     pch=20, 
@@ -33,8 +36,8 @@ if (save){
 	     col=colors7, 
 	     ylim=c(0.4,0.7)*100, 
 	     xaxt="n", ylab="Overlap percentage", xlab="")
-	     axis(side=1,labels=names7,las=2, at=1:7)
-	for (i in 1:7){
+	     axis(side=1,labels=names7,las=2, at=1:8, cex.axis=0.7)
+	for (i in 1:8){
 		abline(v=i, lty=3, col="gray55")
 	}
 	abline(h= data.wgbs.replication[1,4], lty=3, lwd=2)
@@ -42,7 +45,7 @@ if (save){
 }
 
 if (print){
-	plot(1:7, 
+	plot(1:8, 
 	     data.wgbs.replication[vector7,4], 
 	     bty="n", 
 	     pch=20, 
@@ -50,8 +53,8 @@ if (print){
 	     col=colors7, 
 	     ylim=c(0.4,0.7)*100, 
 	     xaxt="n", ylab="Overlap percentage", xlab="")
-	     axis(side=1,labels=names7,las=2, at=1:7)
-	for (i in 1:7){
+	     axis(side=1,labels=names7,las=2, at=1:8, cex=0.1)
+	for (i in 1:8){
 		abline(v=i, lty=3, col="gray55")
 	}
 	abline(h= data.wgbs.replication[1,4], lty=3, lwd=2)

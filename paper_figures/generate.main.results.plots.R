@@ -10,6 +10,11 @@ names4 <- c("Raw", "Quantile","noob","Funnorm")
 vector4 <- c(1, 2, 6, 8)
 vector4 <- c(1, 2, 3, 6,8)
 vector4 <- c(1, 2, 6,8)
+vector4 <- c(1, 2, 6, 3, 8)
+names4 <- c("Raw", "Quantile","noob","Funnorm","Funnorm with noob")
+colors4 <- c("black", "deepskyblue2", "orange", "deeppink4" ,"deeppink1")
+
+
 
 
 

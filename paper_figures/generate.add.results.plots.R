@@ -11,6 +11,9 @@ names7 <- c("Raw", "Quantile", "Funnorm", "dasen", "SWAN", "BMIQ", "Funnorm+Noob
 names7 <- c("Raw", "Quantile", "noob","dasen", "SWAN", "BMIQ", "Funnorm")
 vector7 <- c(1, 2, 6, 4, 5, 7, 8)
 vector7 <- c(1, 2, 6, 4, 5, 7, 8)
+vector7 <- c(1, 2, 6, 4, 5, 7, 3,8)
+names7 <- c("Raw", "Quantile", "noob","dasen", "SWAN", "BMIQ", "Funnorm","Funnorm with noob")
+colors7 <- c("black", "deepskyblue2", "orange", "olivedrab", "red", "slateblue4", "deeppink4","deeppink1")
 
 
 

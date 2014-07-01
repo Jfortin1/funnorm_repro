@@ -5,13 +5,13 @@
 
 colorsRUV <- c("black", "gray70", "deeppink3", "deeppink3", "darkslategray4", "darkslategray4")
 namesRUV <- c("Raw", "SVA", "Funnorm + Noob", "Funnorm + SVA", "RUV", "Funnorm + RUV")
-namesRUV <- c("Raw", "SVA", "RUV", "Funnorm")
+namesRUV <- c("Raw", "SVA", "RUV", "Funnorm with noob")
 vectorSVARUV <- c(1, 9, 11,8)
-colorsRUV <- c("black", "gray70", "darkslategray4","deeppink2")
+colorsRUV <- c("black", "gray70", "darkslategray4","deeppink1")
 
 
-colorsCombat <- c("black","forestgreen", "gray70", "darkslategray4","deeppink2")
-namesCombat <- c("Raw", "Combat", "SVA", "RUV", "Funnorm")
+colorsCombat <- c("black","forestgreen", "gray70", "darkslategray4","deeppink1")
+namesCombat <- c("Raw", "Combat", "SVA", "RUV", "Funnorm with noob")
 vectorCombat <- c(1,11,9,12,8)
 
 

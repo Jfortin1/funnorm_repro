@@ -10,7 +10,9 @@ names4 <- c("Raw", "Quantile","noob","Funnorm")
 vector4 <- c(1, 2, 6, 8)
 vector4 <- c(1, 2, 3, 6,8)
 vector4 <- c(1, 2, 6,8)
-
+vector4 <- c(1, 2, 6,3, 8)
+names4 <- c("Raw", "Quantile","noob","Funnorm","Funnorm with noob")
+colors4 <- c("black", "deepskyblue2", "orange", "deeppink4","deeppink1")
 
 
 
@@ -23,6 +25,9 @@ names7 <- c("Raw", "Quantile", "Funnorm", "dasen", "SWAN", "BMIQ", "Funnorm+Noob
 names7 <- c("Raw", "Quantile", "noob","dasen", "SWAN", "BMIQ", "Funnorm")
 vector7 <- c(1, 2, 6, 4, 5, 7, 8)
 vector7 <- c(1, 2, 6, 4, 5, 7, 8)
+vector7 <- c(1, 2, 6, 4, 5, 7,3, 8)
+names7 <- c("Raw", "Quantile", "noob","dasen", "SWAN", "BMIQ", "Funnorm","Funnorm with noob")
+colors7 <- c("black", "deepskyblue2", "orange", "olivedrab", "red", "slateblue4", "deeppink4","deeppink1")
 
 
 

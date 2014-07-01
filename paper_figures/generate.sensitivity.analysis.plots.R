@@ -1,6 +1,6 @@
 
 	colors <- rep("grey70",9)
-	colors <- c(colors, "deeppink2")
+	colors <- c(colors, "deeppink1")
 
 
 create.sens.analysis <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", 
