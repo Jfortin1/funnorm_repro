@@ -1,5 +1,5 @@
 - Create figure for Lympho/EBV groups
-- Create heatmpa
+- Create heatmpap
 - Create figures plate
 - Describe funnorm + noob somewhere
-- Delta Beta before and after normalizations
+- Write section effect size
