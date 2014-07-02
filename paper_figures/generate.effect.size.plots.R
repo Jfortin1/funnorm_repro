@@ -1,6 +1,7 @@
 
 
-
+plotDir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/repro_document/figures_repro"
+dir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/effect_size_analysis"
 # Plot for EBV
 dmpsDir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/dmps"
 setwd(dmpsDir)
@@ -27,14 +28,20 @@ for (i in 1:length(dmps)){
 
 median <- median(new.diffs[[1]])
 
+setwd(plotDir)
 pdf("Lympho_Effect_Size.pdf", height=5, width=3.5)
 names7 <- c("Raw", "Quantile", "Funnorm","dasen", "SWAN", "noob", "BMIQ","Funnorm w noob")
 colors7 <- c("white", "deepskyblue2", "deeppink4",  "olivedrab", "red","orange", "slateblue4","deeppink1")
+par(bty="n")
 boxplot(new.diffs, ylim=c(0,0.5), col=colors7, names = names7, ylab="Effect size",
-	xaxt="n", xlab="")
+	xaxt="n", xlab="", bty="n", outline=FALSE)
 axis(side=1,labels=names7,las=2, at=1:8, cex.axis=0.6)
 abline(h=median, lty=3, lwd=2)
 dev.off()
+
+
+
+
 
 
 
@@ -62,14 +69,18 @@ for (i in 1:length(dmps)){
 
 median <- median(new.diffs[[1]])
 
+setwd(plotDir)
 pdf("KIRC_Effect_Size.pdf", height=5, width=3.5)
 names7 <- c("Raw", "Quantile", "Funnorm","dasen", "SWAN", "noob", "BMIQ","Funnorm w noob")
 colors7 <- c("white", "deepskyblue2", "deeppink4",  "olivedrab", "red","orange", "slateblue4","deeppink1")
+par(bty="n")
 boxplot(new.diffs, ylim=c(0,0.3), col=colors7, names = names7, ylab="Effect size",
-	xaxt="n", xlab="")
+	xaxt="n", xlab="",bty="n", outline=FALSE)
 abline(h=median, lty=3, lwd=2)
 axis(side=1,labels=names7,las=2, at=1:8, cex.axis=0.6)
 dev.off()
+
+
 
 
 
@@ -99,15 +110,19 @@ for (i in 1:length(dmps)){
 
 median <- median(new.diffs[[1]])
 
-
+setwd(plotDir)
 pdf("Blood_Effect_Size.pdf", height=5, width=3.5)
 names7 <- c("Raw", "Quantile", "Funnorm","dasen", "SWAN", "noob", "BMIQ","Funnorm w noob")
 colors7 <- c("white", "deepskyblue2", "deeppink4",  "olivedrab", "red","orange", "slateblue4","deeppink1")
+par(bty="n")
 boxplot(new.diffs, ylim=c(0,0.05), col=colors7, names = names7, ylab="Effect size",
-	xaxt="n", xlab="")
+	xaxt="n", xlab="",bty="n", outline=FALSE)
 abline(h=median, lty=3, lwd=2)
 axis(side=1,labels=names7,las=2, at=1:8, cex.axis=0.6)
 dev.off()
+
+
+
 
 
 
