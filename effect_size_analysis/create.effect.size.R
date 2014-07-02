@@ -50,7 +50,7 @@ load(data.file) # load norm.matrices list
 		crt <- norm.matrices[[j]]
 		mean1 <- rowMeans(crt[, match(names1, colnames(crt))])
 		mean2 <- rowMeans(crt[, match(names2, colnames(crt))])
-		diffs[[i]] <- mean1 - mean2 
+		diffs[[j]] <- mean1 - mean2 
 		#print(j)
 	}
 
