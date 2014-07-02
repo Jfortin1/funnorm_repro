@@ -1,8 +1,5 @@
 - Create figure for Lympho/EBV groups
 - Create heatmpa
 - Create figures plate
-- Add section results for Sample Size Simulation
-- Change numbers for dot plot
-- Change methods for validation with 27k
 - Describe funnorm + noob somewhere
-
+- Delta Beta before and after normalizations
