@@ -1,4 +1,3 @@
-# This script will create a RGSet for the discovery cohort and a RGSet for the validation cohort
 i=as.numeric(commandArgs(TRUE)[1]) # Dataset
 k=as.numeric(commandArgs(TRUE)[2]) # Value of k
 
@@ -17,7 +16,7 @@ dataset_names <- c(dataset_names,"aml","ontario_gender")
 data.file <- paste0("rgset_",dataset_names[i],".Rda")
 
 
-# Load SVA helper function
+# Load RUV helper function
 setwd(scriptDir)
 source("returnDmpsFromRUV.R")
 
@@ -49,18 +48,6 @@ rgset <- updateObject(rgset)
 	mset <- mapToGenome(mset)
 
 	sex <- getSex(mset)$predictedSex
-
-	#design_names <- c("ontario_ebv","ontario_blood","kirc")
-	#design_names <- c(paste0("design_",design_names))
-	#design_names <- c(design_names,design_names,"design_aml","design_ontario_gender")
-
-	#setwd(designDir)
-	#design_file <- paste0(design_names[i],".Rda")
-	#load(design_file)
-	#design <- get(design_names[i])
-
-	#pheno <- as.character(design$group[match(sampleNames, design$sampleName)])
-	#names(pheno) <- design$sampleName[match(sampleNames, design$sampleName)]
 
 	pheno <- sex 
 	names(pheno) <- colnames(mset)
