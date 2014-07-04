@@ -2,4 +2,3 @@
 - Create heatmpap
 - Create figures plate
 - Describe funnorm + noob somewhere
-- Write section effect size
