@@ -8,15 +8,15 @@ create.main.ebv <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro",
 	library(shinyMethyl)
 	library(minfi)
 
-	load(file.path(inputDir,"designs","design_ontario_ebv.Rda"))
+	load(file.path(input.dir,"designs","design_ontario_ebv.Rda"))
 	design <- design_ontario_ebv
 
 	lymphoblastoid <- as.character(design$sampleName[design$group=="Lymphoblastoid"])
 	lymphocyte <- as.character(design$sampleName[design$group=="Lymphocyte"])
 
-	load(file.path(inputDir,"shinyMethylSets","shiny_dis_ontario_ebv.Rda"))
+	load(file.path(input.dir,"shinyMethylSets","shiny_dis_ontario_ebv.Rda"))
 	shinyMethylSet1 <- shinyMethylSet
-	load(file.path(inputDir,"shinyMethylSets","shiny_val_ontario_ebv.Rda"))
+	load(file.path(input.dir,"shinyMethylSets","shiny_val_ontario_ebv.Rda"))
 	shinyMethylSet2 <- shinyMethylSet
 	shinyMethylSet <- shinyMethyl:::.shinyCombine(shinyMethylSet1, shinyMethylSet2)
 

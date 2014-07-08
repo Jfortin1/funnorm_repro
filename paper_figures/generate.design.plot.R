@@ -163,8 +163,10 @@ create.design.plot.kirc <- function(input.dir = "/Users/Jean-Philippe/funnorm_re
 	}
 
 	if (save){
-		pdf("KIRC_Design.pdf", width=5, height=5,pointsize=8)
 		setwd(output.dir)
+
+		pdf("KIRC_Design.pdf", width=5, height=5,pointsize=8)
+
 
 			plot(1:nrow(design), design$neg, xlab="Plates",
 	      col=colors,
