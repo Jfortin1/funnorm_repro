@@ -1,6 +1,6 @@
 
 
-create.main.ebv <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", 
+create.marginal <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", 
 	output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures_repro", 
 	print = TRUE, save = TRUE) {
 
