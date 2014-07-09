@@ -1,8 +1,10 @@
-14
-36
-0
-11
-5
-3
-0
-21
+ontario ebv dis 14
+kirc dis 36
+ontario blood dis 0
+
+ontario ebv val 11
+kirc val 5
+ontario blood val 3
+
+aml 0
+ontario gender 21

@@ -480,6 +480,16 @@ do
 done
 
 
+# To create the shinyMethylSets
+cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/shinyMethylSets
+for i in {1..8}
+do
+	qsub -cwd -V -l jabba,mem_free=50G,h_vmem=60G create.sh $i;
+done
+
+
+
+
 
 # cd /amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/new_approach
 # # To normalize the datasets with new approach

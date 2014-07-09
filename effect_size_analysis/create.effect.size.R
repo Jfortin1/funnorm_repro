@@ -56,9 +56,23 @@ load(data.file) # load norm.matrices list
 
 
 
+
+
 	setwd(effectSizeDir)
 	save(diffs, file=paste0("diffs_", dataset_names[i], ".Rda"))
 	print(i)
+	setwd(effectSizeDir)
+	library(matrixStats)
+	vars1 <- vars2  <- vector("list", length(norm.matrices))
+	for (j in 1:length(norm.matrices)){
+		crt <- norm.matrices[[j]]
+		vars1[[j]] <- rowVars(crt[, match(names1, colnames(crt))])
+		vars2[[j]] <- rowVars(crt[, match(names2, colnames(crt))])
+		print(j)
+	}
+	save(vars1, vars2, file=paste0("vars_", dataset_names[i], ".Rda"))
+
+
 }
 
 
