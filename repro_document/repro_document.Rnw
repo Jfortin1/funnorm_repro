@@ -22,19 +22,21 @@ BiocStyle::latex()
 % Introduction
 \section{Introduction}
 
- \url{https://github.com/Jfortin1/funnorm_repro}
+All the code that was used to produce the results and plots of the paper can be found at  \url{https://github.com/Jfortin1/funnorm_repro}. In the following sections, we provide instructions about how to use the different scripts to recreate the results and figures. 
+
+Once the GitHub repository is cloned into a personal laptop, this report can be reproduced by setting the \Rcode{funnormDir} below to the path of your repository. 
 
 <<initial>>=
-funnormDir <- "/Users/Jean-Philippe/funnorm_repro"
-setwd("/Users/Jean-Philippe/funnorm_repro/")
+funnormDir <- "/Users/Jean-Philippe/funnorm_repro" # My path
+setwd(funnormDir)
 @
 
-\subsection{Scripts directory}
-\subsection{Cluster jobs file}
-
-The shell script \Rcode{jobs.sh} contain all the ordered jobs that were submitted to the cluster. 
+In the main folder, the shell script \Rcode{jobs.sh} contains all the ordered jobs that were submitted to the cluster in order to get the different results. 
 
 \subsection{Extraction of the data}
+
+The names of the samples for each dataset can be found in the folder \Rcode{/designs}. The IDAT files for the samples from TCGA (KIRC and AML) can be downloaded using the TCGA Data Portal and read into R using the command \Rcode{read.450k} from the \Biocpkg{minfi} in R. 
+
 \subsection{Metadata}
 The folder \Rcode{/metadata} contains the mappings file from TCGA for the AML and KIRC datasets, for both 27k and 450k platforms. These \Rcode{.csv} files contain the names of the samples, the plate information, sample tissue and histology of the samples (used as the phenotype for the subsequent analysis). 
 
@@ -58,7 +60,7 @@ The file \Rcode{create.design.aml.R} extracts the AML tumor subtype from the fil
 
 \subsection{Plate information}
 
-The directory \Rcode{/plate\_info} contains the physical plate information of the samples for each dataset. This information is used in the ComBat method [[]] and in the plate adjustment model used for the 27k data. 
+The directory \Rcode{/plate\_info} contains the physical plate information of the samples for each dataset. 
 
 <<>>=
 setwd(file.path(funnormDir,"plate_info"))
@@ -121,7 +123,7 @@ The row names correspond to the 450k probes. The DMPs are produced with the func
 
 \section{SVA analysis}
 
-\subsection{SVA alone}
+%\subsection{SVA }
 
 The folder \Rcode{/sva\_results} contain the code to run SVA \fixme{citation} on each dataset. The script \Rcode{create.sva.results.R} (which calls the script \Rcode{/scripts/returnDmpsFromSVA.R}) will output the results from SVA in files called \Rcode{sva\_results\_dis\_XXX.Rda} and \Rcode{sva\_results\_val\_XXX.Rda} for each dataset XXX. 
 
@@ -136,24 +138,18 @@ head(dmps)
 @
 
 The file \Rcode{number\_pcs.txt} described the number of surrogate variables found by SVA for each dataset. 
-\subsection{Funnorm + SVA}
+%\subsection{Funnorm + SVA}
 
-We also look at the combination Funnorm  and SVA. The code to produce the results can be found in the directory \Rcode{/sva\_funnorm\_results}. The scripts \Rcode{create.sva.funnorm.results.R}and \Rcode{create.sva.funnorm.dmps.R} and the text file \Rcode{number\_pcs.txt} are similar to the scripts used for SVA above. 
+%We also look at the combination Funnorm  and SVA. The code to produce the results can be found in the directory \Rcode{/sva\_funnorm\_results}. The scripts \Rcode{create.sva.funnorm.results.R}and \Rcode{create.sva.funnorm.dmps.R} and the text file \Rcode{number\_pcs.txt} are similar to the scripts used for SVA above. 
 
 
-\subsection{Noob + Funnorm + SVA}
+%\subsection{Noob + Funnorm + SVA}
 
-We also look at the combination Noob + Funnorm  and SVA. The code to produce the results can be found in the directory \Rcode{/sva\_funnorm\_noob\_results}. The scripts \Rcode{create.sva.funnorm.noob.results.R}and \Rcode{create.sva.funnorm.noob.dmps.R} and the text file \Rcode{number\_pcs.txt} are similar to the scripts used for SVA above. 
+%We also look at the combination Noob + Funnorm  and SVA. The code to produce the results can be found in the directory \Rcode{/sva\_funnorm\_noob\_results}. The scripts \Rcode{create.sva.funnorm.noob.results.R}and \Rcode{create.sva.funnorm.noob.dmps.R} and the text file \Rcode{number\_pcs.txt} are similar to the scripts used for SVA above. 
 
 \section{RUV analysis}
 
-For RUV \fixme{citation}, we used RUV-2.  The scripts to run RUV can be found in \Rcode{/scripts/RUV.functions}. 
-
-\subsection{RUV alone}
-
-\subsection{Funnorm + RUV}
-
-\subsection{Noob + Funnorm + RUV}
+The scripts to run RUV-2 can be found at \Rcode{/scripts/RUV.functions}. The folder \Rcode{ruv\_results} contains the different scripts to produce the results from the RUV analysis. In a first time, the script \Rcode{create.ruv.results.tuning.R} is used to find the optimal number $k$ of factors to remove. The two scripts \Rcode{create.ruv.results.plots.data.R} and \Rcode{create.ruv.results.plots.data.2.R} are used to visualize the optimal number $k$ of factors to remove. The script \Rcode{create.optimal.ruv.R} is used to create the normalized RUV datasets with the optimal $k$ chose by the user. Finally, the script \Rcode{create.ruv.dmps.R} is used to extract the DMPs from the RUV corrected datasets. The file \Rcode{optimal_k.txt} contains the values of $k$ for each dataset that were used in the paper. 
 
 
 \section{ComBat analysis}
@@ -236,15 +232,60 @@ The file \Rcode{create.norm.R} creates the 500 simulated validation datasets for
 
 The subfolders \fixme{names of the folders} contain the simulated datasets for the corresponding datasets. 
 
+\section{Technical Replicates}
+
+The folder \Rcode{/technical\_replicates} contains the code to normalize the 19 trios of technical replicates analyzed in the paper. In particular, the script \Rcode{analysis.R} outputs the file \Rcode{technicalVariances.Rda}. The files \Rcode{tri.Rda} and \Rcode{dataLink.csv} allows the user to map sample names to their trio id. 
+
+\section{Effect sizes}
+
+The script \Rcode{create.effect.size.R} in the folder \Rcode{/effect\_size\_analysis} computes the effect size for each dataset.  
+
+% Reproducible plots:
 \section{Reproducible plots}
+
+Please find below the scripts that generated all the figures in the paper.
+
+\subsection*{Heatmap and PCA}
+
+<<eval=TRUE>>=
+source(file.path(funnormDir, "paper_figures/generate.heatmap.R"));
+create.heatmap(print=TRUE)
+@
+
+
+\subsection*{Technical replicates}
+<<eval=TRUE>>=
+source(file.path(funnormDir, "paper_figures/generate.replicates.plot.R"));
+create.replicates(print=TRUE)
+@
+
+\subsection*{Marginal distributions}
+<<warning=FALSE,message=FALSE,eval=TRUE>>=
+source(file.path(funnormDir, "paper_figures/generate.lympho.marginal.R"));
+create.marginal(print=TRUE)
+@
+
+\subsection*{In silica batch effects}
+<<warning=FALSE, message=FALSE,eval=TRUE>>=
+source(file.path(funnormDir, "paper_figures/generate.design.plot.R"));
+create.design.plot.ebv(print=TRUE)
+create.design.plot.kirc(print=TRUE)
+@
+
+\subsection*{Plate and dye bias effects}
+<<warning=FALSE, message=FALSE,eval=TRUE>>=
+source(file.path(funnormDir, "paper_figures/generate.dyebias.plot.R"));
+create.dyebias(print=TRUE)
+@
+
 \subsection*{Main results}
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.main.results.plots.R"));
-create.main.ebv(print=FALSE)
-create.main.kirc(print=FALSE)
-create.main.blood(print=FALSE)
-create.main.aml(print=FALSE)
+create.main.ebv(print=TRUE)
+create.main.kirc(print=TRUE)
+create.main.blood(print=TRUE)
+create.main.aml(print=TRUE)
 
 @
 
@@ -254,10 +295,10 @@ create.main.aml(print=FALSE)
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.sva.ruv.results.plots.R"));
-create.sva.ruv.ebv(print=FALSE)
-create.sva.ruv.kirc(print=FALSE)
-create.sva.ruv.blood(print=FALSE)
-create.sva.ruv.aml(print=FALSE)
+create.sva.ruv.ebv(print=TRUE)
+create.sva.ruv.kirc(print=TRUE)
+create.sva.ruv.blood(print=TRUE)
+create.sva.ruv.aml(print=TRUE)
 @
 
 
@@ -265,38 +306,38 @@ create.sva.ruv.aml(print=FALSE)
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.roc.gender.plots.R"));
-create.roc.gender(print=FALSE)
+create.roc.gender(print=TRUE)
 @
 
 \subsection*{Additional Results}
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.add.results.plots.R"));
-create.add.ebv(print=FALSE)
-create.add.kirc(print=FALSE)
-create.add.blood(print=FALSE)
-create.add.aml(print=FALSE)
+create.add.ebv(print=TRUE)
+create.add.kirc(print=TRUE)
+create.add.blood(print=TRUE)
+create.add.aml(print=TRUE)
 @
 
 \subsection*{Dotplot for WGBS validation}
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.dot.plot.R"));
-create.dot.plot(print=FALSE)
+create.dot.plot(print=TRUE)
 @
 
 \subsection*{ROC curves for sample size simulation}
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.sample.size.simulation.plots.R"));
-create.sample.size.sim.figures(print=FALSE)
+create.sample.size.sim.figures(print=TRUE)
 @
 
 \subsection*{Curves for sensitivity analysis}
 
 <<>>=
 source(file.path(funnormDir, "paper_figures/generate.sensitivity.analysis.plots.R"));
-create.sens.analysis(print=FALSE)
+create.sens.analysis(print=TRUE)
 @
 
 \end{document}
