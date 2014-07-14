@@ -1,6 +1,0 @@
-- Create figure for Lympho/EBV groups
-- Create heatmpap
-- Create figures plate
-- Create figure Dye Bias
-- Describe funnorm + noob somewhere
-
