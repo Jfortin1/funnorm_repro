@@ -37,7 +37,7 @@ create.main.ebv <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro",
 	roc4[[1]] <- roc4[[1]][vector4]
 	roc4[[2]] <- roc4[[2]][vector4]
 
-	roc.data.dir <- file.path(input.dir, "roc_data")
+	roc.data.dir <- file.path(input.dir, "roc_data_filtered")
 	setwd(roc.data.dir)
 	load("overlapData_1000_ontario_ebv.Rda")
 
@@ -91,7 +91,7 @@ create.main.kirc <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", o
 	source(file.path(input.dir, "scripts/printOverlapFromData.R"))
 
 
-	roc.data.dir <- file.path(input.dir, "roc_data")
+	roc.data.dir <- file.path(input.dir, "roc_data_filtered")
 	setwd(roc.data.dir)
 
 	## Now let's create the ROC curve for KIRC:
@@ -104,7 +104,7 @@ create.main.kirc <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", o
 	roc4[[2]] <- roc4[[2]][vector4]
 
 	source(file.path(input.dir, "scripts/printOverlapFromData.R"))
-	data.dir <- file.path(input.dir, "external_validations")
+	data.dir <- file.path(input.dir, "external_validations_filtered")
 	setwd(data.dir)
 
 	# For discovery dataset:
@@ -156,7 +156,7 @@ create.main.blood <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", 
 	source(file.path(input.dir, "scripts/printROCFromROCData.R"))
 
 
-	roc.data.dir <- file.path(input.dir, "roc_data")
+	roc.data.dir <- file.path(input.dir, "roc_data_filtered")
 	setwd(roc.data.dir)
 	load("rocData_0.1K_ontario_blood.Rda")
 	rocDataTotal <- rocData
@@ -190,7 +190,7 @@ create.main.aml <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", ou
 	print = TRUE, save = TRUE) {
 
 	source(file.path(input.dir, "scripts/printOverlapFromData.R"))
-	data.dir <- file.path(input.dir, "external_validations")
+	data.dir <- file.path(input.dir, "external_validations_filtered")
 	setwd(data.dir)
 
 	load("overlapData1K_aml.Rda")
