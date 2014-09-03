@@ -19,3 +19,17 @@ save(snp.probes, file="snp.probes.rda")
 
 # Need to load the cross-hybridizing probes:
 
+# To download the list of cross-reactive probes:
+# curl -O http://www.sickkids.ca/MS-Office-Files/Research/Weksberg%20Lab/48639-non-specific-probes-Illumina450k.xlsx
+
+library(xlsx)
+cross.probes.info <- read.xlsx2("48639-non-specific-probes-Illumina450k.xlsx", sheetIndex=1,colIndex=1:5)
+names(cross.probes.info)[2:5] <- 47:50
+save(cross.probes.info, file="cross.probes.info.rda")
+
+
+load("cross.probes.info.rda")
+cross.probes <- as.character(rownames(cross.probes.info)) #29,233 such probes
+save(cross.probes, file="cross.probes.rda")
+bad.probes <- union(snp.probes, cross.probes) #46,535 probes in total
+save(bad.probes, file="bad.probes.rda")
