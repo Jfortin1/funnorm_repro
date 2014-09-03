@@ -7,7 +7,8 @@ designDir <- paste0(funnormDir,"/designs")
 normDir   <- paste0(funnormDir,"/norm_datasets")
 scriptDir <- paste0(funnormDir,"/scripts")
 dmpsDir   <- paste0(funnormDir,"/dmps")
-rocDir    <- paste0(funnormDir,"/roc_data")
+rocDir    <- paste0(funnormDir,"/roc_data_filtered")
+badDir    <- paste0(funnormDir,"/bad_probes")
 
 
 
@@ -26,6 +27,15 @@ load(data.file.dis)
 dis <- dmps
 load(data.file.val)
 val <- dmps
+
+# Filtering bad probes:
+load(file.path(badDir, "bad.probes.rda"))
+
+for (i in 1:length(dis)){
+	dis[[i]] <- dis[[i]][!((rownames(dis[[i]]) %in% bad.probes)),]
+	val[[i]] <- val[[i]][!((rownames(val[[i]]) %in% bad.probes)),]
+	print(i)
+}
 
 setwd(scriptDir)
 source("generateOverlapData.R")
