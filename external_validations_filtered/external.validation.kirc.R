@@ -9,7 +9,8 @@ combatDir  <- paste0(funnormDir,"/combat_results")
 ruvDir     <- paste0(funnormDir,"/ruv_results")
 ruvFunnormDir <- paste0(funnormDir,"/ruv_funnorm_results")
 scriptDir  <- paste0(funnormDir,"/scripts")
-externalValDir <- paste0(funnormDir,"/external_validations")
+externalValDir <- paste0(funnormDir,"/external_validations_filtered")
+badDir    <- paste0(funnormDir,"/bad_probes")
 
 # Let's do Discovery first:
 # Let's load the 450k dmps:
@@ -65,7 +66,19 @@ for (i in 1:n){
 }
 
 
+
 names(dmps27k) <- names(dmps450k)
+
+
+# Need to remove the bad probes:
+# Filtering bad probes:
+load(file.path(badDir, "bad.probes.rda"))
+
+for (kk in 1:length(dmps450k)){
+	dmps450k[[kk]] <- dmps450k[[kk]][!((rownames(dmps450k[[kk]]) %in% bad.probes)),]
+	dmps27k[[kk]] <- dmps27k[[kk]][!((rownames(dmps27k[[kk]]) %in% bad.probes)),]
+	print(kk)
+}
 
 setwd(scriptDir)
 source("generateOverlapData.R")
@@ -98,6 +111,13 @@ rocdata_27k_kirc_dis <- generateROCDataFromExternalTruth(p.list, dmps450k)
 	
 setwd(externalValDir)	
 save(rocdata_27k_kirc_dis , file="rocdata_27k_kirc_dis.Rda")
+
+
+
+
+
+
+
 
 
 
@@ -154,6 +174,20 @@ for (i in 1:n){
 }
 
 names(dmps27k) <- names(dmps450k)
+
+
+
+# Need to remove the bad probes:
+# Filtering bad probes:
+load(file.path(badDir, "bad.probes.rda"))
+
+for (kk in 1:length(dmps450k)){
+	dmps450k[[kk]] <- dmps450k[[kk]][!((rownames(dmps450k[[kk]]) %in% bad.probes)),]
+	dmps27k[[kk]] <- dmps27k[[kk]][!((rownames(dmps27k[[kk]]) %in% bad.probes)),]
+	print(kk)
+}
+
+
 
 setwd(scriptDir)
 source("generateOverlapData.R")
