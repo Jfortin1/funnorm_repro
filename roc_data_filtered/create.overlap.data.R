@@ -31,10 +31,10 @@ val <- dmps
 # Filtering bad probes:
 load(file.path(badDir, "bad.probes.rda"))
 
-for (i in 1:length(dis)){
-	dis[[i]] <- dis[[i]][!((rownames(dis[[i]]) %in% bad.probes)),]
-	val[[i]] <- val[[i]][!((rownames(val[[i]]) %in% bad.probes)),]
-	print(i)
+for (kk in 1:length(dis)){
+	dis[[kk]] <- dis[[kk]][!((rownames(dis[[kk]]) %in% bad.probes)),]
+	val[[kk]] <- val[[kk]][!((rownames(val[[kk]]) %in% bad.probes)),]
+	print(kk)
 }
 
 setwd(scriptDir)
@@ -50,6 +50,9 @@ save(overlapData1000, file=paste0("overlapData_1000_",dataset_names[i],".Rda"))
 
 overlapData100 <- generateOverlapData(dis,val,100)
 save(overlapData100, file=paste0("overlapData_100_",dataset_names[i],".Rda"))
+
+
+
 
 
 
