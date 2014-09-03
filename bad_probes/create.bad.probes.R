@@ -17,5 +17,5 @@ setwd(dir)
 snp.probes <- snps
 save(snp.probes, file="snp.probes.rda")
 
-
+# Need to load the cross-hybridizing probes:
 
