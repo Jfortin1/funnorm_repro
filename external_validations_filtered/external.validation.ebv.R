@@ -1,12 +1,12 @@
 # External validation with the bbseq data
 funnormDir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro"
-externalValDir <- paste0(funnormDir,"/external_validations")
+externalValDir <- paste0(funnormDir,"/external_validations_filtered")
 dmpDir <- paste0(funnormDir, "/dmps")
 svaDir <- paste0(funnormDir,"/sva_results")
 svaFunnormDir <- paste0(funnormDir,"/sva_funnorm_results")
 ruvDir <- paste0(funnormDir,"/ruv_results")
 ruvFunnormDir <- paste0(funnormDir,"/ruv_funnorm_results")
-
+badDir    <- paste0(funnormDir,"/bad_probes")
 
 # Let's load the dmps for EBV:
 setwd(dmpDir)
@@ -14,6 +14,16 @@ load("dmps_dis_ontario_ebv.Rda")
 dis <- dmps
 load("dmps_val_ontario_ebv.Rda")
 val <- dmps
+
+# Filtering bad probes:
+load(file.path(badDir, "bad.probes.rda"))
+
+for (i in 1:length(dis)){
+	dis[[i]] <- dis[[i]][!((rownames(dis[[i]]) %in% bad.probes)),]
+	val[[i]] <- val[[i]][!((rownames(val[[i]]) %in% bad.probes)),]
+	print(i)
+}
+
 
 
 # To load the sequencing data:
@@ -39,6 +49,10 @@ overlapDmrs <- names(subsetByOverlaps(locations, dmrs)) #1,824 loci
 overlapBlock <- names(subsetByOverlaps(locations, blocks)) #228,121 loci
 overlap <- union(overlapDmrs, overlapBlock) # 228,696 loci
 
+# We want to remove bad probes:
+load(file.path(badDir, "bad.probes.rda"))
+overlap <- overlap[!(overlap %in% bad.probes)] # 218,501 probes in total
+
 k=100000
 replicated.wgbs <- rep(0, length(dmps))
 replicated.dis.val <- rep(0, length(dmps))
@@ -57,4 +71,5 @@ data.wgbs.replication$perc.rep.dis.val <- replicated.dis.val/k*100
 data.wgbs.replication$perc.rep.wgbs <- replicated.wgbs/k*100
 data.wgbs.replication$perc.rep.second.step <- replicated.wgbs/replicated.dis.val*100
 
+setwd(externalValDir)
 save(data.wgbs.replication, file="data.wgbs.replication.Rda")
