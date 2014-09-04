@@ -5,15 +5,17 @@ disValDir <- paste0(funnormDir,"/dis_val_datasets")
 designDir <- paste0(funnormDir,"/designs")
 scriptDir <- paste0(funnormDir,"/scripts")
 sensitivityDir <- paste0(funnormDir,"/sensitivity_analysis")
+sensitivityDir2 <- paste0(funnormDir,"/sensitivity_analysis_filtered")
 dmpsDir    <- paste0(sensitivityDir,"/dmps")
 normDir   <- paste0(sensitivityDir,"/norm_datasets")
-rocDir   <- paste0(sensitivityDir,"/roc_data")
+rocDir   <- paste0(sensitivityDir2,"/roc_data")
+badDir    <- paste0(funnormDir,"/bad_probes")
 
 dataset_names <- c("ontario_ebv","ontario_blood","kirc")
 dataset_names <- c(paste0("dis_",dataset_names), paste0("val_",dataset_names))
 dataset_names <- c(dataset_names,"aml","ontario_gender")
 
-
+# IMPORTANT: only 1 and 3
 for (i in c(1,3)){
 
 
@@ -42,15 +44,28 @@ for (i in c(1,3)){
 
 	names(dis) <- names(val) <- 1:10
 
+	# Filtering bad probes: 
+	# Filtering bad probes:
+	load(file.path(badDir, "bad.probes.rda"))
+
+	for (j in 1:length(dis)){
+		dis[[j]] <- dis[[j]][!((rownames(dis[[j]]) %in% bad.probes)),]
+		val[[j]] <- val[[j]][!((rownames(val[[j]]) %in% bad.probes)),]
+		print(j)
+	}
+
+
+
+
 	setwd(scriptDir)
 	source("generateROCData.R")
 
 	setwd(rocDir)
 	dataset_names <- c("ontario_ebv","ontario_blood","kirc")
 
-	k_vector <- c(100000,100,100000)
+	k_vector <- as.integer(c(100000,100,100000))
 
-	rocData <- generateROCData(dis,val,k_vector[i])
+	rocData <- generateROCData(discovery=dis,validation=val,truthCutoff=k_vector[i])
 
 	save(rocData, file=paste0("rocData_",k_vector[k]/1000,"K_",dataset_names[i],".Rda"))
 
