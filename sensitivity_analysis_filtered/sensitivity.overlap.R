@@ -5,10 +5,12 @@ disValDir <- paste0(funnormDir,"/dis_val_datasets")
 designDir <- paste0(funnormDir,"/designs")
 scriptDir <- paste0(funnormDir,"/scripts")
 sensitivityDir <- paste0(funnormDir,"/sensitivity_analysis")
+sensitivityDir2 <- paste0(funnormDir,"/sensitivity_analysis_filtered")
 dmpsDir    <- paste0(sensitivityDir,"/dmps")
 normDir   <- paste0(sensitivityDir,"/norm_datasets")
-overlapDir   <- paste0(sensitivityDir,"/overlap_data")
+overlapDir   <- paste0(sensitivityDir2,"/overlap_data")
 aml27kDir <- paste0(funnormDir,"/aml_27k")
+badDir    <- paste0(funnormDir,"/bad_probes")
 
 dataset_names <- c("ontario_ebv","ontario_blood","kirc")
 dataset_names <- c(paste0("dis_",dataset_names), paste0("val_",dataset_names))
@@ -56,6 +58,17 @@ for (i in 1:n){
 
 
 names(dmps27k) <- names(dmps450k)
+
+# Filtering the bad probes:
+load(file.path(badDir, "bad.probes.rda"))
+
+	for (j in 1:length(dmps450k)){
+		dmps450k[[j]] <- dmps450k[[j]][!(rownames(dmps450k[[j]]) %in% bad.probes),]
+		dmps27k[[j]] <- dmps27k[[j]][!(rownames(dmps27k[[j]]) %in% bad.probes),]
+		print(j)
+	}
+
+
 
 setwd(scriptDir)
 source("generateOverlapData.R")
