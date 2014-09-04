@@ -1,9 +1,10 @@
 
 
-plotDir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/repro_document/figures_repro"
+plotDir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/paper_figures_filtered"
 dir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/effect_size_analysis"
 # Plot for EBV
 dmpsDir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/dmps"
+badDir    <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/bad_probes"
 setwd(dmpsDir)
 
 
@@ -16,6 +17,22 @@ val <- dmps
 setwd(dir)
 load("diffs_dis_ontario_ebv.Rda")
 for (i in 1:length(diffs)){diffs[[i]] <- abs(diffs[[i]])}
+
+# Need to filter bad probes:
+load(file.path(badDir, "bad.probes.rda"))
+
+for (i in 1:length(dis)){
+	dis[[i]] <- dis[[i]][!((rownames(dis[[i]]) %in% bad.probes)),]
+	val[[i]] <- val[[i]][!((rownames(val[[i]]) %in% bad.probes)),]
+	print(i)
+}
+
+for (i in 1:length(diffs)){
+	diffs[[i]] <- diffs[[i]][!(names(diffs[[i]]) %in% bad.probes)]
+	print(i)
+}
+
+
 
 
 k = 100000
@@ -58,6 +75,24 @@ val <- dmps
 setwd(dir)
 load("diffs_dis_kirc.Rda")
 for (i in 1:length(diffs)){diffs[[i]] <- abs(diffs[[i]])}
+
+
+# Need to filter bad probes:
+load(file.path(badDir, "bad.probes.rda"))
+
+for (i in 1:length(dis)){
+	dis[[i]] <- dis[[i]][!((rownames(dis[[i]]) %in% bad.probes)),]
+	val[[i]] <- val[[i]][!((rownames(val[[i]]) %in% bad.probes)),]
+	print(i)
+}
+
+for (i in 1:length(diffs)){
+	diffs[[i]] <- diffs[[i]][!(names(diffs[[i]]) %in% bad.probes)]
+	print(i)
+}
+
+
+
 
 k = 100000
 new.diffs <- diffs
@@ -128,51 +163,6 @@ dev.off()
 
 
 
-
-
-
-
-# Trash:
-# dir <- "/amber1/archive/sgseq/workspace/hansen_lab1/funnorm_repro/effect_size_analysis"
-
-# setwd(dir)
-
-# load("vars_val_ontario_ebv.Rda")
-
-# boxplot(vars1, ylim=c(0, 0.02))
-# dev.off()
-
-
-
-
-# load("diffs_val_ontario_ebv.Rda")
-# load("diffs_val_kirc.Rda")
-# load("diffs_dis_kirc.Rda")
-# for (i in 1:length(diffs)){
-# 	diffs[[i]] <- abs(diffs[[i]])
-# }
-
-# pdf("try.pdf", height=5, width=3)
-# names7 <- c("Raw", "Quantile", "Funnorm","dasen", "SWAN", "noob", "BMIQ","Funnorm with noob")
-# colors7 <- c("white", "deepskyblue2", "deeppink4",  "olivedrab", "red","orange", "slateblue4","deeppink1")
-# boxplot(diffs, ylim=c(0,0.2), col=colors7, names = names7)
-# dev.off()
-
-
-# pdf("try.pdf", height=5, width=3)
-# names4 <- c("Raw", "Quantile", "Funnorm","noob","Funnorm with noob")
-# colors4 <- c("white", "deepskyblue2", "deeppink4","orange","deeppink1")
-# boxplot(diffs[c(1,2,3,6,8)], ylim=c(0,0.2), col=colors4, names = names4)
-# dev.off()
-
-
-
-# setwd(dir)
-# pdf("try.pdf", height=5, width=3)
-# names4 <- c("Raw", "Quantile", "Funnorm","noob","Funnorm with noob")
-# colors4 <- c("white", "deepskyblue2", "deeppink4","orange","deeppink1")
-# boxplot(new.diffs[c(1,2,3,6,8)], ylim=c(0,0.7), col=colors4, names = names4)
-# dev.off()
 
 
 
