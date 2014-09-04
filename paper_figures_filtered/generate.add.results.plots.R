@@ -74,14 +74,15 @@ create.add.ebv <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro",
 
 
 
-create.add.kirc <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures_repro", 
+create.add.kirc <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", 
+	output.dir = "/Users/Jean-Philippe/funnorm_repro/paper_figures_filtered", 
 	print = TRUE, save = TRUE) {
 
 	source(file.path(input.dir, "scripts/printROCFromROCData.R"))
 	source(file.path(input.dir, "scripts/printOverlapFromData.R"))
 
 
-	roc.data.dir <- file.path(input.dir, "roc_data")
+	roc.data.dir <- file.path(input.dir, "roc_data_filtered")
 	setwd(roc.data.dir)
 
 	## Now let's create the ROC curve for KIRC:
@@ -94,7 +95,7 @@ create.add.kirc <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", ou
 	roc7[[2]] <- roc7[[2]][vector7]
 
 	source(file.path(input.dir, "scripts/printOverlapFromData.R"))
-	data.dir <- file.path(input.dir, "external_validations")
+	data.dir <- file.path(input.dir, "external_validations_filtered")
 	setwd(data.dir)
 
 	# For discovery dataset:
@@ -137,13 +138,14 @@ create.add.kirc <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", ou
 }
 
 
-create.add.blood <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures_repro", 
+create.add.blood <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", 
+	output.dir = "/Users/Jean-Philippe/funnorm_repro/paper_figures_filtered", 
 	print = TRUE, save = TRUE) {
 
 	source(file.path(input.dir, "scripts/printROCFromROCData.R"))
 
 
-	roc.data.dir <- file.path(input.dir, "roc_data")
+	roc.data.dir <- file.path(input.dir, "roc_data_filtered")
 	setwd(roc.data.dir)
 	load("rocData_0.1K_ontario_blood.Rda")
 	rocDataTotal <- rocData
@@ -175,11 +177,12 @@ create.add.blood <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", o
 
 
 
-create.add.aml <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro", output.dir = "/Users/Jean-Philippe/funnorm_repro/repro_document/figures_repro", 
+create.add.aml <- function(input.dir = "/Users/Jean-Philippe/funnorm_repro",
+ output.dir = "/Users/Jean-Philippe/funnorm_repro/paper_figures_filtered", 
 	print = TRUE, save = TRUE) {
 
 	source(file.path(input.dir, "scripts/printOverlapFromData.R"))
-	data.dir <- file.path(input.dir, "external_validations")
+	data.dir <- file.path(input.dir, "external_validations_filtered")
 	setwd(data.dir)
 
 	load("overlapData1K_aml.Rda")
