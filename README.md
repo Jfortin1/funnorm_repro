@@ -2,6 +2,10 @@ Functional normalization
 =============
 Authors: [Jean-Philippe Fortin](mailto:zerbino@ebi.ac.uk) and [Kasper Daniel Hansen](mailto:khansen@jhsph.edu)
 
+Published paper
+------------
+Please find the paper published in Genome Biology here:
+[Functional normalization of 450k methylation array data improves replication in large cancer studies](http://genomebiology.com/2014/15/12/503)
 
 Preprint
 ------------
