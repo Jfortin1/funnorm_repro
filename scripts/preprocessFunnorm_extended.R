@@ -28,7 +28,7 @@ preprocessFunnorm_extended <- function(rgSet, nPCs=2, sex = NULL, verbose = TRUE
   
    
     # To correct for row/column effect:
-    sampleNames <- colnames(rgset)
+    sampleNames <- colnames(rgSet)
     pos <- as.factor(as.numeric(as.factor(substr(sampleNames, 12 ,17 ))))
     pos <- as.matrix(model.matrix(~pos -1))
     if (pos.corr && is.null(covs)){
